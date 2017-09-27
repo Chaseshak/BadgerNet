@@ -81,5 +81,5 @@ test:
 production:
   <<: *default
   database: BadgerNet_production
-  username: BadgerNet
+  username: rails
   password: <%= ENV['BADGERNET_DATABASE_PASSWORD'] %>
