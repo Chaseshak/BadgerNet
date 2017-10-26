@@ -1,0 +1,3 @@
+# ScheduleHelper
+module ScheduleHelper
+end
