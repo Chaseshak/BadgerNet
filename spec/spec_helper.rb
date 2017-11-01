@@ -1,3 +1,13 @@
+# Does code coverage for tests
+require 'simplecov'
+require 'coveralls'
+SimpleCov.formatter = Coveralls::SimpleCov::Formatter
+SimpleCov.start do
+   add_filter 'spec'
+end
+Coveralls.wear!
+# Must be at top of file
+
 require_relative 'support/controller_helpers'
 require_relative 'support/login_helpers'
 require 'devise'

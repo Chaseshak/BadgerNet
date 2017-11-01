@@ -9,6 +9,11 @@ Rails.application.routes.draw do
 
   # Home controller routes
   get 'home/index'
+
+  # get 'announcement/index'
+  resources :announcement, :path => 'announcement' #gives CRUD routes
+
+  # scheulde
   get '/schedule', to: 'schedule#index'
 
   # Permissions routes
@@ -16,3 +21,4 @@ Rails.application.routes.draw do
   delete 'permissions/destroy'
 
 end
+

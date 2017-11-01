@@ -1,0 +1,13 @@
+<h2>Send Announcement</h2>
+<%= form_for @announcement, url: {action: "create"} do |f| %>
+  <%= f.label 'Receipent enter name goes here' %> </br>
+  <%= f.check_box :email%> 
+  <%= f.label :email, 'Email'%> </br>
+  <%= f.check_box :sms %>
+  <%= f.label :sms, 'SMS'%> </br>
+  <%= f.label :title, 'Title' %>
+  <%= f.text_field :title %> </br>
+  <%= f.label 'body' %></br>
+  <%= f.text_area :content, size: "60x12" %> </br>
+  <%= f.submit "Send" %>
+  <% end %>

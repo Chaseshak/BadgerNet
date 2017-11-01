@@ -1,5 +1,6 @@
 require 'rails_helper'
-RSpec.describe ScheduleController, type: :controller do
+
+RSpec.describe ContactsController, type: :controller do
   describe 'GET #index' do
     before do
       get :index
@@ -10,6 +11,10 @@ RSpec.describe ScheduleController, type: :controller do
 
     it 'renders the index template' do
       expect(response).to render_template(:index)
+    end
+
+    it 'assigns @users' do
+      expect(assigns(:users)).not_to be_nil
     end
   end
 end

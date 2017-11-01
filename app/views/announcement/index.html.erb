@@ -1,0 +1,19 @@
+<div class="main">
+<div class="container">
+  <h1>Announcements List</h1>
+  
+  <div class="announcements">
+  <div class="container">
+  
+  <% @announcements.each do |announcement| %> 
+    <div class="announcement"> 
+      <p class="title">Title: <%= announcement.title %></p> 
+      <p class="content"><%= announcement.content %></p> 
+      <p class="time"><%= (announcement.created_at).strftime('%c') %></p> 
+      <p class="type">type: email? <%= announcement.email %> sms? <%= announcement.sms %></p>
+      <p>_____</p>
+    </div> 
+<% end %>
+<%= link_to 'New Announcement', "announcement/new" %>
+</div>
+</div>

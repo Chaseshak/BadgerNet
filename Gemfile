@@ -23,6 +23,8 @@ gem 'devise'
 gem 'authority'
 # Role management library https://github.com/RolifyCommunity/rolify
 gem 'rolify'
+# Twilio texting
+gem 'twilio-ruby', '~> 5.4.2'
 
 # Rubocop is a Ruby linter Read more: https://github.com/bbatsov/rubocop
 gem 'rubocop', require: false
@@ -39,10 +41,12 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13'
+  gem 'coveralls', require: false
   gem 'rspec-rails', '~> 3.6'
   gem 'rails-controller-testing'
   gem 'factory_girl_rails'
   gem 'selenium-webdriver'
+  gem 'simplecov', require: false
 end
 
 group :development do
