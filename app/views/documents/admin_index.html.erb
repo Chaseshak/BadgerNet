@@ -4,12 +4,16 @@
   </div>
 <% end %>
 <br />
+<%= link_to "New Document", new_document_path, class: "btn btn-primary" %>
+<br />
+<br />
 <table class="table table-bordered table-striped">
   <thead>
     <tr>
       <th>Name</th>
       <th>Download Link</th>
       <th>Date Uploaded</th>
+      <th>&nbsp;</th>
     </tr>
   </thead>
   <tbody>
@@ -18,6 +22,7 @@
         <td><%= document.name %></td>
         <td><%= link_to "Download Document", document.attachment_url %></td>
         <td><%= document.created_at.strftime("%d %b. %Y") %></td>
+        <td><%= button_to "Delete",  document, method: :delete, class: "btn btn-danger", confirm: "Are you sure that you wish to delete #{document.name}?" %></td>
       </tr>
     <% end %>
   </tbody>

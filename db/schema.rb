@@ -10,14 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171101202402) do
+ActiveRecord::Schema.define(version: 20171117020637) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "announcements", force: :cascade do |t|
     t.string "content"
-    t.datetime "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "title"
@@ -26,12 +25,10 @@ ActiveRecord::Schema.define(version: 20171101202402) do
   end
 
   create_table "documents", force: :cascade do |t|
-    t.string "title", null: false
-    t.string "file_path", null: false
+    t.string "name"
+    t.string "attachment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["file_path"], name: "index_documents_on_file_path", unique: true
-    t.index ["title"], name: "index_documents_on_title", unique: true
   end
 
   create_table "roles", force: :cascade do |t|
