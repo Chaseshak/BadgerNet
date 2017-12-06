@@ -1,0 +1,5 @@
+<!-- To be rendered in an existing form -->
+<%= label_tag 'users[]', "Teams (Hold ctrl while clicking to select multiple teams)" %>
+<%= select_tag 'users', options_from_collection_for_select(Role.non_permissions_roles, "id", "name"),
+ multiple: true %>
+<br />

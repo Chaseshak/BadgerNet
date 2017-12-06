@@ -1,5 +1,13 @@
 <%= form_for @announcement, url: {action: "create"} do |f| %>
+  <%= label_tag(:fname, "Enter First Name")%>
+  <%= text_field_tag(:fname) %>
+
+  <%= button_to "Add User", {action: 'get', name: :fname}, method: :get, class:"button-danger"%>
+
   <%= f.label 'Receipent enter name goes here' %>
+  <%= label_tag 'user[]', "Teams (Hold ctrl while clicking to select multiple teams)" %>
+  <%= select_tag 'user', options_from_collection_for_select(@user.all_users, "id", "last_name"),
+   multiple: true %>
   <%= f.label "Send via" %>
   <div class="check-box-group">
     <div class="check-box-group-item">

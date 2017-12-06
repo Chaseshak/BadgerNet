@@ -6,6 +6,8 @@ class AnnouncementController < ApplicationController
   before_action :coach?, except: %i[index show]
 
   def index
+    @userlist = [User.find_by(first_name: 'Jack').first_name]
+    @user = User.where(first_name: @userlist)
     @announcements = Announcement.scoped(current_user)
     @announcement = Announcement.new
     if current_user.has_role? :coach
@@ -20,6 +22,10 @@ class AnnouncementController < ApplicationController
   end
 
   def create
+    @name = params[:name]
+    if User.exists?(first_name: 'Jack')
+      @userlist =  [User.find_by(first_name: 'john').first_name]
+    else
     @announcement = Announcement.new(announcement_params)
     if @announcement.sms && @announcement.save
       send_text_message(@announcement.title, @announcement.content)
@@ -29,6 +35,7 @@ class AnnouncementController < ApplicationController
     else
       redirect_to '/announcement'
       flash[:alert] = 'Please select a send type before submitting announcement'
+    end
     end
   end
 
@@ -49,6 +56,13 @@ class AnnouncementController < ApplicationController
     render 'index'
   end
 
+  def get
+    @name = parmas[:fname]
+    if User.exists?(first_name: @name)
+      @userlist = @userlist + [User.find_by(first_name: @name).first_name]
+    end
+  end
+
   private
 
   def announcement_params
@@ -59,6 +73,8 @@ class AnnouncementController < ApplicationController
     @announcement.sender = [current_user.first_name, current_user.last_name].join(' ')
     @announcement.save
     @announcement.scopify(params[:roles])
+    #@announcement.scopify(params[:users])
+
     redirect_to '/announcement'
     flash[:success] = 'Announcement sent'
   end

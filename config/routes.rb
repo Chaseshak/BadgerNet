@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   # Announcements
   resources :announcement, :path => 'announcement'
+  get '/announcement', to: 'announcement#get'
 
   # Contacts (teams)
   delete 'contacts/destroy'
