@@ -24,4 +24,12 @@ class User < ApplicationRecord
     # rubocop:enable Lint/HandleExceptions
     !has_role?(role)
   end
+
+  def first_name
+    self[:first_name].capitalize if self[:first_name]
+  end
+
+  def last_name
+    self[:last_name].capitalize if self[:last_name]
+  end
 end

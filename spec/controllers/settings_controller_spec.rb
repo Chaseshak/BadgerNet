@@ -42,7 +42,7 @@ RSpec.describe SettingsController, type: :controller do
         put :update, params: { id: user.id, user: { first_name: 'test' } }
         user = User.find(user.id) # reload
         expect(flash[:success]).to eq('User Profile Sucessfully Updated')
-        expect(user.first_name).to eq('test')
+        expect(user.first_name).to eq('Test')
       end
     end
 
@@ -54,7 +54,7 @@ RSpec.describe SettingsController, type: :controller do
         put :update, params: { id: user.id, user: new_settings }
         user = User.find(user.id) # reload
         expect(flash[:success]).to eq('User Profile Sucessfully Updated')
-        expect(user.first_name).to eq('test')
+        expect(user.first_name).to eq('Test')
         expect(user.phone).to eq('0987654321')
       end
     end

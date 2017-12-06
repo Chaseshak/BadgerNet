@@ -16,7 +16,7 @@
     <% @documents.each do |document| %>
       <tr>
         <td><%= document.name %></td>
-        <td><%= link_to "Download Document", document.attachment_url %></td>
+        <td><%= button_to "Download Document", document.attachment_url, class: 'button-primary' %></td>
         <td><%= document.created_at.strftime("%d %b. %Y") %></td>
       </tr>
     <% end %>

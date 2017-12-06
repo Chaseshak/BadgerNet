@@ -7,12 +7,13 @@
                     <tr>
                         <td><%= announcement.title %></td>
                         <td><%= truncate(announcement.content, :length => 80) %></td>
+                        <td><%= announcement.updated_at.strftime("%d %b. %Y")%></td>
                         <td>
-                            <button class="button-primary" onclick="toggleModal('show-announcement-<%= index %>')">Show</button>
+                            <button class="button-primary" onclick="toggleModal('show-announcement-<%= index %>')">View</button>
                             <div class="modal hidden" id="show-announcement-<%= index %>">
                             <div class="modal-content">
-                            <div class="modal-close" onclick="toggleModal('show-announcement-<%= index %>')">&times;</div>
-                            <%= render partial: 'announcement/show', locals: {announcement: announcement} %>
+                                <div class="modal-close" onclick="toggleModal('show-announcement-<%= index %>')">&times;</div>
+                                <%= render partial: 'announcement/show', locals: {announcement: announcement} %>
                             </div>
                         </div>
                         </td>

@@ -1,0 +1,16 @@
+<div class="info-block-wrapper">
+    <div class="info-block">
+    <h2>Recent Documents</h2>
+        <table>
+            <tbody>
+                <% @documents.each do |document| %>
+                <tr>
+                    <td><%= document.name %></td>
+                    <td><%= document.created_at.strftime("%d %b. %Y") %></td>
+                    <td><%= button_to "Download", document.attachment_url, class: "button-primary" %></td>
+                </tr>
+                <% end %>
+            </tbody>
+        </table>
+    </div>
+</div>
