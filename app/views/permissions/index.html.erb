@@ -63,25 +63,6 @@ var usersList = new List('user-search-region', options)
 <div class="modal hidden" id="new-user">
     <div class="modal-content">
         <div class="modal-close" onclick="toggleModal('new-user')">&times;</div>
-        <h2>Invite New User</h2>
-        <%= form_tag("/permissions", method: "post") do %>
-            <%= label_tag :email, 'Email' %>
-            <%= text_field_tag :email, '', class: 'input' %>
-            <%= label_tag 'Type' %>
-            <div class="check-box-group">
-                <div class="check-box-group-item">
-                    <%= radio_button_tag :role, 'athlete', checked: true %>
-                    <%= label_tag :role, 'Athlete', value: 'athlete' %>
-                </div>
-                <div class="check-box-group-item">
-                    <%= radio_button_tag :role, 'coach' %>
-                    <%= label_tag :role, 'Coach', value: 'coach' %>
-                </div>
-            </div>
-            <div style="margin-top:1.5em;text-align:right;">
-                <%= button_tag 'Cancel', type: :reset, class: 'button-default', onclick: "toggleModal('new-user')" %>
-                <%= submit_tag('Invite User', class: 'button-primary') %>
-            </div>
-        <% end %>
+        <%= render 'invite_user' %>
     </div>
 </div>
