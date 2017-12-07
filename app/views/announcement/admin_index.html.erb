@@ -12,7 +12,6 @@
                     <th>Type</th>
                     <th>Sender</th>
                     <th>Options</th>
-                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -32,8 +31,6 @@
                         <td><%= announcement.sender %></td>
                         <td>
                             <%= button_to 'Delete', { action: 'destroy', id: announcement.id }, method: :delete, class: 'button-danger'%>
-                        </td>
-                        <td>
                             <button class="button-primary" onclick="toggleModal('show-announcement-<%= index %>')">View</button>
                             <div class="modal hidden" id="show-announcement-<%= index %>">
                             <div class="modal-content">
