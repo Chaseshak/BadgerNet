@@ -13,7 +13,9 @@ class ContactsController < ApplicationController
   def update
     @u = User.find(params[:id])
     @r = Role.find(params[:role])
+    coach_before = @u.coach?
     update_role
+    @u.add_role :coach if coach_before
     redirect_to action: 'index'
   end
 
