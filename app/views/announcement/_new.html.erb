@@ -4,12 +4,9 @@
   <%= label_tag(:lname, "Enter Last Name")%>
   <%= text_field_tag(:lname) %>
 
-  <%= f.label 'Receipent enter name goes here' %>
-  <%= label_tag 'user[]', "Teams (Hold ctrl while clicking to select multiple teams)" %>
-  <%= select_tag 'user', options_from_collection_for_select(@user.all_users, "id", "last_name"),
-   multiple: true %>
   <%= f.label "Send via" %>
   <div class="check-box-group">
+
     <div class="check-box-group-item">
       <%= f.check_box :email%>  <%# figure out how to do validation %>
       <%= f.label :email, 'Email'%>
