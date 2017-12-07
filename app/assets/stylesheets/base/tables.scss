@@ -12,7 +12,7 @@ table {
     border-collapse: collapse;
 
     th, td {
-        padding: 0.6em;
+        padding: 0.75em;
     }
 
     thead {
@@ -22,12 +22,10 @@ table {
     tbody {
         tr { border-top: 1px solid #eaeaea }
     }
-}
 
-.no-border-top {
-  border-top: none;
-}
-
-.separator {
-  border-bottom: 1px solid rgba(0,0,0,0.25);
+    form {
+        display: inline-block;
+        margin: 0;
+        padding: 0;
+    }
 }
