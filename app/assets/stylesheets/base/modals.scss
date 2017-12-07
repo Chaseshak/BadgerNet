@@ -4,7 +4,7 @@ Modals
 ==========================================================================
 */
 
-$modal-max-width: 32em;
+$modal-max-width: 36em;
 
 .modal {
     position: fixed;
@@ -23,9 +23,7 @@ $modal-max-width: 32em;
     background-color: white;
     border-radius: 0.5em;
 
-    h2 {
-        margin: 0;
-    }
+    h2 { margin: 0; }
 }
 
 .modal-close {

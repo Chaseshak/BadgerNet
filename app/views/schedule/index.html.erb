@@ -1,5 +1,9 @@
-<h1>Schedule</h1>
-<%= render 'events_calendar' %>
+<h1>My Schedule</h1>
+<div class="info-block-wrapper" style="margin-top:1em;">
+    <div class="info-block">
+        <%= render 'events_calendar' %>
+    </div>
+</div>
 <%= render 'events_table' %>
 <div class="modal hidden" id="new-event">
     <div class="modal-content">
@@ -7,4 +11,3 @@
         <%= render 'new_event' %>
     </div>
 </div>
-

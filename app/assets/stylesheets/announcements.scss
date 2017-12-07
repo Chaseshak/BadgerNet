@@ -3,3 +3,16 @@
 Announcements
 ==========================================================================
 */
+
+@import "base/fonts";
+
+// announcement view in modal
+.announcement-tagline {
+    margin: 0;
+    font-style: italic;
+    color: $faded-text-color;
+}
+
+.announcement-content {
+    font-size: 1.15em;
+}

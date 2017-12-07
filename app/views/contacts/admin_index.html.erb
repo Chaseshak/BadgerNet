@@ -1,57 +1,58 @@
 <h1>Teams</h1>
-<button class="button-primary" onclick="toggleModal('new-team')" style="float: right; margin: 1.25em 0 0 0;">New Team</button>
-<button class="button-primary" onclick="toggleModal('delete-team')" style="float: right; margin: 1.25em 1em 0 0;">Select Teams to Delete</button>
-<header>
-  <br/>
-Simply check the boxes under a user's name to add them to a team. Un-check the box to remove them from the team.
-</header>
-<table>
-    <thead>
-        <tr>
-            <th>First</th>
-            <th>Last</th>
-            <th>Email</th>
-            <th>Phone Number</th>
-        </tr>
-    </thead>
-    <tbody>
-        <% @users.each do |user| %>
-            <!--for each user -->
-            <tr class='no-border-top'>
-                <% unless user.first_name %>
-                    <td colspan='4'><i>Pending Invite</i></td>
-                <% else %>
-                    <td class='no-border-top'><%= user.first_name.capitalize %></td>
-                    <td class='no-border-top'><%= user.last_name.capitalize %></td>
-                    <td class='no-border-top'><%= user.email %></td>
-                    <td class='no-border-top'><%= user.phone %></td>
+<div style="float:right;">
+    <button class="button-primary" onclick="toggleModal('new-team')">New Team</button>
+    <button class="button-danger" onclick="toggleModal('delete-team')">Delete Teams</button>
+</div>
+<p>Check the boxes under a user's name to add them to a team. Un-check the box to remove them from the team.</p>
+<div class="info-block-wrapper" style="margin-top:1em;">
+    <div class="info-block">
+        <table class="contacts-team-selection-table">
+            <thead>
+                <tr>
+                    <th>First</th>
+                    <th>Last</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @users.each do |user| %>
+                    <tr>
+                        <% unless user.first_name %>
+                            <td colspan='4'><i>Pending Invite</i></td>
+                        <% else %>
+                            <td><%= user.first_name.capitalize %></td>
+                            <td><%= user.last_name.capitalize %></td>
+                            <td><%= user.email %></td>
+                            <td><%= user.phone %></td>
+                        <% end %>
+                    </tr>
+                    <tr style="border-top:none;">
+                        <td colspan="4" style="padding:0;">
+                            <div class="contacts-team-selection">
+                                <% @roles.sort_by{ |r| r.name }.each do |role|%>
+                                    <div class="contacts-team-selection-item">
+                                        <%= form_tag("/contacts/#{user.id}?role=#{role.id}", method: "put") do %>
+                                            <%= check_box_tag role.name, role.id, user.has_role?(role.name), onclick: "document.getElementById('#{user.id}#{role.id}').click();" %>
+                                            <%= label_tag role.name %>
+                                            <%= submit_tag('', class: 'hidden', id: "#{user.id}#{role.id}") %>
+                                        <% end %>
+                                    </div>
+                                <% end %>
+                            </div>
+                        </td>
+                    </tr>
                 <% end %>
-            </tr>
-            <tr class='no-border-top separator'>
-                <td colspan='4' style='padding-top: 0;'>
-                    <div class='check-box-group' style='margin: 0;'>
-                    <% @roles.sort_by{ |r| r.name }.each do |role|%>
-                        <div class="check-box-group-item">
-                          <%= form_tag("/contacts/#{user.id}?role=#{role.id}", method: "put") do %>
-                            <%= check_box_tag role.name, role.id, user.has_role?(role.name), onclick: "document.getElementById('#{user.id}#{role.id}').click();" %>
-                            <%= label_tag role.name %>
-                            <%= submit_tag('', class: 'hidden', id: "#{user.id}#{role.id}") %>
-                          <% end %>
-                        </div>
-                        <!-- <%= button_to role.name.capitalize, {action: 'update', id: user.id, role: role.id}, method: :put, class:"button-danger" %> -->
-                    <% end %>
-                    </div>
-                </td>
-            </tr>
-        <% end %>
-    </tbody>
-</table>
+            </tbody>
+        </table>
+    </div>
+</div>
 <div class="modal hidden" id="new-team">
     <div class="modal-content">
         <div class="modal-close" onclick="toggleModal('new-team')">&times;</div>
         <h2>New Team</h2>
         <%= form_tag do %>
-            <%= label_tag(:name, "Name:") %>
+            <%= label_tag(:name, "Name") %>
             <%= text_field_tag(:name) %>
             <div style="margin-top:1.5em;text-align:right;">
                 <button class="button-default" onclick="toggleModal('new-team')">Cancel</button>

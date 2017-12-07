@@ -1,16 +1,15 @@
-<h1><%= announcement.title %></h1>
-
-<p>
-   Date: <%= announcement.created_at %><br />
-   Type: 
-   <% if announcement.sms && announcement.email %>
-     <%= 'Both' %>
-   <% elsif announcement.sms%>
-     <%= 'SMS' %>
-   <% elsif announcement.email%>
-     <%= 'Email' %>
-   <% end %><br />
-   <br />
-   <strong>Message:</strong> <%= announcement.content %><br />
-   
-</p>
+<div class="announcement">
+    <h2><%= announcement.title %></h2>
+    <%  
+        send_method = ''
+        if announcement.sms && announcement.email
+            send_method = ', sent via SMS and email'
+        elsif announcement.email
+            send_method = ', sent via email'
+        elsif announcement.sms 
+            send_method = ', sent via SMS'
+        end
+    %>
+    <p class="announcement-tagline"><%= announcement.created_at.strftime("%B %-d at %-I%p") %><%= send_method %></p>
+    <p class="announcement-content"><%= announcement.content %>
+</div>

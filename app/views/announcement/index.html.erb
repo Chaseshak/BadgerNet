@@ -1,41 +1,43 @@
 <h1>Announcements</h1>
-<table>
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>Content</th>
-            <th>Time</th>
-            <th>Type</th>
-            <th>Sender</th>
-            <th>Options</th>
-        </tr>
-    </thead>
-    <tbody>
-        <% @announcements.each_with_index do |announcement, index| %>
-            <tr>
-                <td><%= announcement.title%></td>
-                <td><%= truncate(announcement.content, :length => 80) %></td>
-                <td><%= (announcement.created_at).strftime("%I:%M%p, %d %b. %Y") %></td>
-                <td>
-                    <% if announcement.sms && announcement.email %>
-                        <%= 'Both' %>
-                    <% elsif announcement.sms%>
-                        <%= 'SMS' %>
-                    <% elsif announcement.email%>
-                        <%= 'Email' %>
+<div class="info-block-wrapper" style="margin-top:1em;">
+    <div class="info-block">
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Sender</th>
+                    <th>Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @announcements.each_with_index do |announcement, index| %>
+                    <tr>
+                        <td><%= announcement.title%></td>
+                        <td><%= (announcement.created_at).strftime("%b %-d, %Y at %-I:%M%p") %></td>
+                        <td>
+                            <% if announcement.sms && announcement.email %>
+                                <%= 'SMS, Email' %>
+                            <% elsif announcement.sms%>
+                                <%= 'SMS' %>
+                            <% elsif announcement.email%>
+                                <%= 'Email' %>
+                            <% end %>
+                        </td>
+                        <td><%=announcement.sender%></td>
+                        <td>
+                        <button class="button-primary" onclick="toggleModal('show-announcement-<%= index %>')">View</button>
+                        <div class="modal hidden" id="show-announcement-<%= index %>">
+                            <div class="modal-content">
+                                <div class="modal-close" onclick="toggleModal('show-announcement-<%= index %>')">&times;</div>
+                                <%= render partial: 'show', locals: {announcement: announcement} %>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
                     <% end %>
-                </td>
-                <td><%=announcement.sender%></td>
-                <td>
-                <button class="button-primary" onclick="toggleModal('show-announcement-<%= index %>')">Show</button>
-                <div class="modal hidden" id="show-announcement-<%= index %>">
-                <div class="modal-content">
-                    <div class="modal-close" onclick="toggleModal('show-announcement-<%= index %>')">&times;</div>
-                    <%= render partial: 'show', locals: {announcement: announcement} %>
-                    </div>
-                </div>
-                </td>
-            </tr>
-            <% end %>
-    </tbody>
-</table>
+            </tbody>
+        </table>
+    </div>
+</div>

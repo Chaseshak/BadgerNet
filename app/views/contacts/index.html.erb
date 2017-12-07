@@ -1,22 +1,25 @@
 <h1>Contacts</h1>
-<table>
-    <thead>
-        <tr>
-            <th>First</th>
-            <th>Last</th>
-            <th>Email</th>
-            <th>Phone Number</th>
-        </tr>
-    </thead>
-    <tbody>
-        <% @users.each do |user| %>
-            <!--for each user -->
-            <tr>
-                <td><%= user.first_name %></td>
-                <td><%= user.last_name %></td>
-                <td><%= user.email %></td>
-                <td><%= user.phone %></td>
-            </tr>
-        <% end %>
-    </tbody>
-</table>
+<div class="info-block-wrapper" style="margin-top:1em;">
+    <div class="info-block">
+        <table>
+            <thead>
+                <tr>
+                    <th>First</th>
+                    <th>Last</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @users.each do |user| %>
+                    <tr>
+                        <td><%= user.first_name %></td>
+                        <td><%= user.last_name %></td>
+                        <td><%= link_to user.email, "mailto:#{user.email}" %></td>
+                        <td><%= user.phone %></td>
+                    </tr>
+                <% end %>
+            </tbody>
+        </table>
+    </div>
+</div>
