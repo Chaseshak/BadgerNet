@@ -6,7 +6,7 @@
 <p>Check the boxes under a user's name to add them to a team. Un-check the box to remove them from the team.</p>
 <div class="info-block-wrapper" style="margin-top:1em;">
     <div class="info-block">
-        <table>
+        <table class="contacts-team-selection-table">
             <thead>
                 <tr>
                     <th>First</th>
@@ -17,7 +17,6 @@
             </thead>
             <tbody>
                 <% @users.each do |user| %>
-                    <!--for each user -->
                     <tr>
                         <% unless user.first_name %>
                             <td colspan='4'><i>Pending Invite</i></td>
@@ -28,19 +27,18 @@
                             <td><%= user.phone %></td>
                         <% end %>
                     </tr>
-                    <tr>
-                        <td colspan='4' style='padding-top: 0;'>
-                            <div class='check-box-group' style='margin: 0;'>
-                            <% @roles.sort_by{ |r| r.name }.each do |role|%>
-                                <div class="check-box-group-item">
-                                <%= form_tag("/contacts/#{user.id}?role=#{role.id}", method: "put") do %>
-                                    <%= check_box_tag role.name, role.id, user.has_role?(role.name), onclick: "document.getElementById('#{user.id}#{role.id}').click();" %>
-                                    <%= label_tag role.name %>
-                                    <%= submit_tag('', class: 'hidden', id: "#{user.id}#{role.id}") %>
+                    <tr style="border-top:none;">
+                        <td colspan="4" style="padding:0;">
+                            <div class="contacts-team-selection">
+                                <% @roles.sort_by{ |r| r.name }.each do |role|%>
+                                    <div class="contacts-team-selection-item">
+                                        <%= form_tag("/contacts/#{user.id}?role=#{role.id}", method: "put") do %>
+                                            <%= check_box_tag role.name, role.id, user.has_role?(role.name), onclick: "document.getElementById('#{user.id}#{role.id}').click();" %>
+                                            <%= label_tag role.name %>
+                                            <%= submit_tag('', class: 'hidden', id: "#{user.id}#{role.id}") %>
+                                        <% end %>
+                                    </div>
                                 <% end %>
-                                </div>
-                                <!-- <%= button_to role.name.capitalize, {action: 'update', id: user.id, role: role.id}, method: :put, class:"button-danger" %> -->
-                            <% end %>
                             </div>
                         </td>
                     </tr>

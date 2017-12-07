@@ -1,0 +1,29 @@
+/*
+==========================================================================
+Contacts
+==========================================================================
+*/
+
+@import "base/fonts";
+@import "base/colors";
+
+.contacts-team-selection {
+    display: flex;
+    margin: 0;
+    padding: 0.6em;
+    box-sizing: border-box;
+    background-color: rgba(142, 68, 173, 0.04);
+}
+
+.contacts-team-selection-item {
+    &:not(:first-child) {
+        margin: 0 0 0 0.85em;
+    }
+
+    label {
+        margin: 0;
+        display: inline-block;
+        font-weight: $font-weight-normal;
+        color: rgba(59, 47, 65, 0.85)
+    }
+}
