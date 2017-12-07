@@ -1,58 +1,65 @@
-<h1 style='display: inline-block'>User Permissions</h1>
-<button class='button-primary' style='float: right; margin: 1.25em 0 0 0;' onclick="toggleModal('new-user')">Invite New User</button>
-<div id='users'>
-    <input class='search input' placeholder='Search' />
-    <strong>Sort By:</strong>
-    <button class='sort button-primary' data-sort='first_name'>First Name</button>
-    <button class='sort button-primary' data-sort='last_name'>Last Name</button>
-    <button class='sort button-primary' data-sort='last_name'>Email</button>
-    <button class='sort button-primary' data-sort='last_name'>Role</button>
-    <table>
-        <thead>
-            <tr>
-                <th>First</th>
-                <th>Last</th>
-                <th>Email</th>
-                <th>Permissions</th>
-                <th>Options</th>
-            </tr>
-        </thead>
-        <tbody class='list'>
-            <% @users.each do |u| %>
-                <tr>
-                    <td class='first_name'>
-                      <% if u.first_name %>
-                        <%= u.first_name %>
-                      <% else %>
-                        <i>Pending Invite<i>
-                      <% end %>
-                    </td>
-                    <td class='last_name'><%= u.last_name.capitalize if u.last_name %></td>
-                    <td class='email'><%= u.email %></td>
-                    <td class='role'>
-                        <% if u.has_role? :coach %>
-                            <%= 'Coach' %>
-                            <%= link_to "Make Athlete", permission_path(id: u.id),  method: :put, class: 'edit-permissions' %>
-                        <% else %>
-                            <%= 'Athlete' %>
-                            <%= link_to "Make Coach", permission_path(id: u.id), method: :put, class: 'edit-permissions' %>
+<h1>User Permissions</h1>
+<div style="float:right;">
+    <button class='button-primary' onclick="toggleModal('new-user')">Invite New User</button>
+</div>
+<div id='user-search-region'>
+    <input class='search' placeholder='Search' style="margin-top:1em;" />
+    <div class="permissions-sorting" style="margin-top:0.75em;">
+        <p>Sort By:</p>
+        <button class='sort button-primary' data-sort='first_name'>First Name</button>
+        <button class='sort button-primary' data-sort='last_name'>Last Name</button>
+        <button class='sort button-primary' data-sort='last_name'>Email</button>
+        <button class='sort button-primary' data-sort='last_name'>Role</button>
+    </div>
+    <div class="info-block-wrapper" style="margin-top:1em;">
+        <div class="info-block">
+            <table>
+                <thead>
+                    <tr>
+                        <th>First</th>
+                        <th>Last</th>
+                        <th>Email</th>
+                        <th>Permissions</th>
+                        <th>Options</th>
+                    </tr>
+                </thead>
+                <tbody class='list'>
+                    <% @users.each do |u| %>
+                        <tr>
+                            <td class='first_name'>
+                            <% if u.first_name %>
+                                <%= u.first_name %>
+                            <% else %>
+                                <em>Pending Invite</em>
+                            <% end %>
+                            </td>
+                            <td class='last_name'><%= u.last_name.capitalize if u.last_name %></td>
+                            <td class='email'><%= u.email %></td>
+                            <td class='role'>
+                                <% if u.has_role? :coach %>
+                                    <%= 'Coach' %>
+                                    <%= link_to "Make Athlete", permission_path(id: u.id),  method: :put, class: 'permissions-edit' %>
+                                <% else %>
+                                    <%= 'Athlete' %>
+                                    <%= link_to "Make Coach", permission_path(id: u.id), method: :put, class: 'permissions-edit' %>
+                                <% end %>
+                            </td>
+                            <td>
+                                <%= button_to 'Delete', { action: 'destroy', id: u.id }, method: :delete, class: 'button-danger'%>
+                            </td>
+                        </tr>
                         <% end %>
-                    </td>
-                    <td>
-                        <%= button_to 'Delete', { action: 'destroy', id: u.id }, method: :delete, class: 'button-danger'%>
-                    </td>
-                </tr>
-                <% end %>
-        </tbody>
-    </table>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 <script type="text/javascript">
 var options = {
     valueNames: [ 'first_name', 'last_name', 'email', 'role' ]
 };
-var usersList = new List('users', options)
+var usersList = new List('user-search-region', options)
 </script>
-
 <div class="modal hidden" id="new-user">
     <div class="modal-content">
         <div class="modal-close" onclick="toggleModal('new-user')">&times;</div>
