@@ -54,7 +54,7 @@
         <div class="modal-close" onclick="toggleModal('new-team')">&times;</div>
         <h2>New Team</h2>
         <%= form_tag do %>
-            <%= label_tag(:name, "Name:") %>
+            <%= label_tag(:name, "Name") %>
             <%= text_field_tag(:name) %>
             <div style="margin-top:1.5em;text-align:right;">
                 <button class="button-default" onclick="toggleModal('new-team')">Cancel</button>

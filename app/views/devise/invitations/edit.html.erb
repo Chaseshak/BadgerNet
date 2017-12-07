@@ -4,11 +4,11 @@
         <%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => { :method => :put } do |f| %>
             <%= devise_error_messages! %>
             <%= f.hidden_field :invitation_token %>
-            <%= f.label 'First Name' %>
+            <%= f.label 'First name' %>
             <%= f.text_field :first_name, class: 'input' %>
-            <%= f.label 'Last Name' %>
+            <%= f.label 'Last name' %>
             <%= f.text_field :last_name, class: 'input' %>
-            <%= f.label 'Phone Number' %>
+            <%= f.label 'Phone number' %>
             <%= f.text_field :phone, class: 'input' %>
             <% if f.object.class.require_password_on_accepting %>
                 <%= f.label :password %>
