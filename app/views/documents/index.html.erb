@@ -14,7 +14,7 @@
                 <tr>
                     <td><%= document.name %></td>
                     <td><%= document.created_at.strftime("%b %-d, %Y at %-I:%M%p") %></td>
-                    <td><div class="button-primary"><%= link_to "Download Document", document.attachment_url %></div></td>
+                    <td><%= link_to 'Download Document', document.attachment_url, class: 'button-primary' %></td>
                 </tr>
             <% end %>
             </tbody>
