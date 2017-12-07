@@ -1,4 +1,6 @@
 <%= form_for @announcement, url: {action: "create"} do |f| %>
+  <%= label_tag(:fname, "Enter a Name of a User or select a roll(s)")%>
+
   <%= label_tag(:fname, "Enter First Name")%>
   <%= text_field_tag(:fname) %>
   <%= label_tag(:lname, "Enter Last Name")%>
