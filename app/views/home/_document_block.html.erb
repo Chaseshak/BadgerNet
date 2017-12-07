@@ -6,7 +6,7 @@
                 <% @documents.each do |document| %>
                 <tr>
                     <td><%= document.name %></td>
-                    <td><%= document.created_at.strftime("%b %-d, %Y") %></td>
+                    <td><%= document.created_at.in_time_zone('Central Time (US & Canada)').strftime("%b %-d, %Y") %></td>
                     <td><%= link_to 'Download Document', document.attachment_url, class: 'button-primary' %></td>
                 </tr>
                 <% end %>
