@@ -10,6 +10,8 @@ class User < ApplicationRecord
   validates :phone, format: { with: /\A(\d{10}|\(?\d{3}\)?[-. ]\d{3}[-.]\d{4})\z/,
                               message: 'Please enter a 10 digit US Phone Number' }
 
+  attr_accessor :confirm_password
+
   def coach?
     has_role? :coach
   end
@@ -23,6 +25,11 @@ class User < ApplicationRecord
     end
     # rubocop:enable Lint/HandleExceptions
     !has_role?(role)
+  end
+
+  def role_ids
+    non_permissions_roles = roles.reject { |r| r.name == 'coach' || r.name == 'athlete' }
+    non_permissions_roles.map(&:id).to_a
   end
 
   def first_name

@@ -1,7 +1,7 @@
 <div class="calendar-container">
     <div class="timeline">
         <% calendar_hours.each do |hour| %>
-        <% 
+        <%
             if hour < 12 then display = hour.to_s + ' AM'
             elsif hour == 12 then display = hour.to_s + ' PM'
             else display = (hour - 12).to_s + ' PM'

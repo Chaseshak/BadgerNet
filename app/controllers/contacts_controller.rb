@@ -64,12 +64,12 @@ class ContactsController < ApplicationController
   def update_role
     if !@u.roles.include?(@r)
       @u.add_role(@r.name)
-      flash[:success] = "Successfully added #{@u.first_name} to "\
-      "#{@r.name.capitalize} team!"
+      Scope.backfill_event_scope(@u, @r)
+      flash[:success] = "Successfully added #{@u.first_name} to #{@r.cap_name} team!"
     else
       @u.delete_role @r.name
-      flash[:success] = "Successfully removed #{@u.first_name} from "\
-      "#{@r.name.capitalize} team!"
+      Scope.remove_event_scope(@u, @r)
+      flash[:success] = "Successfully removed #{@u.first_name} from #{@r.cap_name} team!"
     end
   end
 end

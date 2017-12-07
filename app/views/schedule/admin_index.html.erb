@@ -1,5 +1,18 @@
 <h1>Team Availability</h1>
-<p>Select a specific group or individual to view their availability,</p>
+<p>Select a specific team to view their availability.</p>
+<%= form_tag("/schedule", method: "get") do %>
+    <%= render 'shared/roles' %>
+    <%= submit_tag('Filter', class: 'button-primary') %>
+    <%= link_to 'Clear Filters', schedule_path, class: 'button-primary', style: 'color: white;' %>
+<% end %>
+<% unless params[:roles].blank? %>
+    <p> Currently filtering by:
+        <% params[:roles].each_with_index do |r, i| %>
+            <%= Role.find_by(id: r).name + ', ' if i < params[:roles].count - 1 %>
+            <%= Role.find_by(id: r).name if i == params[:roles].count - 1 %>
+        <% end %>
+    </p>
+<% end %>
 <div class="info-block-wrapper" style="margin-top:1em;">
     <div class="info-block">
         <%= render 'events_calendar' %>

@@ -38,4 +38,51 @@ RSpec.describe Event, type: :model do
       end
     end
   end
+
+  describe 'public class methods' do
+    context 'responds to its methods' do
+      it { expect(Event).to respond_to(:scoped_by_day) }
+      it { expect(Event).to respond_to(:raw_sql) }
+      it { expect(Event).to respond_to(:roles_conditions) }
+    end
+
+    context 'executes its methods correctly' do
+      context 'scoped_by_day' do
+        let!(:event) { create(:event, days: [0]) }
+        let!(:role) { create(:role) }
+        let!(:user) { create(:athlete_user) }
+        it 'returns all the events on a particular day with a scope' do
+          user.schedule = create(:schedule, event: [event])
+          user.add_role role.name
+          Scope.backfill_event_scope(user, role)
+          expect(Event.scoped_by_day(0, [role.id]).first).to eq(event)
+        end
+        it 'returns all the events when role is nil' do
+          event2 = create(:event, days: [0])
+          user.schedule = create(:schedule, event: [event, event2])
+          user.add_role role.name
+          Scope.backfill_event_scope(user, role)
+          expect(Event.scoped_by_day(0, '').count).to eq(Event.where('0=ANY(days)').count)
+        end
+      end
+
+      context 'raw_sql' do
+        it 'without roles gives the simple query' do
+          correct_query = 'SELECT DISTINCT(events.*) FROM events '\
+          'WHERE 0=ANY(events.days)'
+          expect(Event.raw_sql(0, nil)).to eq(correct_query)
+        end
+
+        it 'when given roles it returns the full query' do
+          role1 = create(:role)
+          role2 = create(:role)
+          correct_query = 'SELECT DISTINCT(events.*) FROM events'\
+          " INNER JOIN (SELECT * FROM scopes WHERE scopes.role_id = #{role1.id}"\
+          " OR scopes.role_id = #{role2.id} )  sub_scopes ON (sub_scopes.resource_id"\
+          ' = events.id) WHERE 0=ANY(events.days)'
+          expect(Event.raw_sql(0, [role1.id, role2.id])).to eq(correct_query)
+        end
+      end
+    end
+  end
 end

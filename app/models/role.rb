@@ -15,4 +15,8 @@ class Role < ApplicationRecord
     roles = Role.where(archived: false).order('name ASC')
     roles.reject { |r| r.name == 'athlete' || r.name == 'coach' }
   end
+
+  def cap_name
+    name.capitalize if name
+  end
 end
