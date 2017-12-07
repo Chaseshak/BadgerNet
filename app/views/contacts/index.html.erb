@@ -15,7 +15,7 @@
                     <tr>
                         <td><%= user.first_name %></td>
                         <td><%= user.last_name %></td>
-                        <td><%= user.email %></td>
+                        <td><%= link_to user.email, "mailto:#{user.email}" %></td>
                         <td><%= user.phone %></td>
                     </tr>
                 <% end %>
