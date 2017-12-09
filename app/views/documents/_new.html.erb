@@ -2,6 +2,7 @@
     <%= f.label :name %>
     <%= f.text_field :name,:required => 'required' %>
     <%= f.label :attachment %>
+    <td> (.pdf .doc .docx .csv .jpg .xlsx .xls .xlt)</td>
     <%= f.file_field :attachment,:required => 'required' %>
     <%= render 'shared/roles' %>
     <div style="margin-top:1.5em;text-align:right;">
