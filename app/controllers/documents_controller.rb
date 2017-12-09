@@ -20,7 +20,8 @@ class DocumentsController < ApplicationController
       @document.scopify(params[:roles])
       flash[:success] = 'Document uploaded'
     else
-      flash[:alert] = 'Document cannot be uploaded. Allowed types: .pdf .doc .docx .csv .jpg .xlsx .xls .xlt'
+      flash[:alert] = 'Document cannot be uploaded. Allowed types: .pdf .doc
+      .docx .csv .jpg .xlsx .xls .xlt'
     end
     redirect_to documents_path
   end

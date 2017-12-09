@@ -9,7 +9,6 @@ class AttachmentUploader < CarrierWave::Uploader::Base
   end
 
   def extension_whitelist
-    %w(pdf doc docx csv jpg xlsx xls xlt)
+    %w[pdf doc docx csv jpg xlsx xls xlt]
   end
-
 end
