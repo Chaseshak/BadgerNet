@@ -21,7 +21,7 @@ class DocumentsController < ApplicationController
       flash[:success] = 'Document uploaded'
     else
       flash[:alert] = 'Document cannot be uploaded. Allowed types: .pdf .doc
-      .docx .csv .jpg .xlsx .xls .xlt'
+      .docx .csv .jpg .xlsx .xls .xlt .txt .png .heic .ppt .tiff .pptx'
     end
     redirect_to documents_path
   end
