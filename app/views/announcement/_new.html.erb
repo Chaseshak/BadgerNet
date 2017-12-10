@@ -1,14 +1,14 @@
 <%= form_for @announcement, url: {action: "create"} do |f| %>
-  <%= f.label "Send via" %>
-  <div class="check-box-group">
-    <div class="check-box-group-item">
-      <%= f.check_box :email%> 
-      <%= f.label :email, 'Email'%>
-    </div>
-    <div class="check-box-group-item">
-      <%= f.check_box :sms%>
-      <%= f.label :sms, 'SMS'%>
-    </div>
+    <%= f.label "Send via" %>
+    <div class="check-box-group">
+        <div class="check-box-group-item">
+        <%= f.check_box :email%>  
+        <%= f.label :email, 'Email'%>
+        </div>
+        <div class="check-box-group-item">
+        <%= f.check_box :sms%>
+        <%= f.label :sms, 'SMS'%>
+        </div>
   </div>
   <%= render 'shared/roles' %>
   <%= f.label :title, 'Title'%>
