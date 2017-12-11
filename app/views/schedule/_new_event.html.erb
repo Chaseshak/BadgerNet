@@ -1,10 +1,10 @@
 <h2>New Event</h2>
 <%= form_tag do %>
-    <%= label_tag(:name, "Name:") %>
+    <%= label_tag(:name, "Name") %>
     <%= text_field_tag(:name) %>
-    <%= label_tag(:time, "Time:") %>
+    <%= label_tag(:time, "Time") %>
     <%= time_field(:time, :start) %> to <%= time_field(:time, :end) %>
-    <%= label_tag("Days repeated:") %>
+    <%= label_tag("Days repeated") %>
     <div class="check-box-group">
         <% days_of_week.each do |day| %>
         <div class="check-box-group-item">

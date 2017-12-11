@@ -45,17 +45,23 @@ RSpec.describe ContactsController, type: :controller do
       sign_in(coach)
     end
 
+    it 'shows an alert if the team already exists (and is not archived)' do
+      role = create(:role)
+      post :create, params: { name: role.name }
+      expect(flash[:alert]).to eq("Team '#{role.name}' already exists!")
+    end
+
     it 'creates a new role (team) if one does not already exist' do
       post :create, params: { name: 'new_team' }
       expect(Role.where(name: 'new_team').first).not_to be nil
-      expect(flash[:success]).to eq('Successfully added new team New_team')
+      expect(flash[:success]).to eq("Successfully added new team 'new_team'")
     end
 
-    it 'does not add a new role if it already exists' do
-      role = create(:role)
+    it 'un-archives role if already exists' do
+      role = create(:role, archived: true)
       post :create, params: { name: role.name }
-      expect(Role.find(role.id)).not_to be nil
-      expect(flash[:notice]).to eq("Team '#{role.name}' already exists!")
+      expect(Role.find(role.id).archived).to be false
+      expect(flash[:success]).to eq("Successfully added new team '#{role.name}'")
     end
   end
 
@@ -71,7 +77,7 @@ RSpec.describe ContactsController, type: :controller do
     it 'adds the team if the user is not already on the team' do
       put :update, params: { id: user.id, role: role.id }
       expect(user.has_role?(role.name)).to be true
-      success_message = "Successfully added #{user.first_name.capitalize} to "\
+      success_message = "Successfully added #{user.first_name} to "\
       "#{role.name.capitalize} team!"
       expect(flash[:success]).to eq(success_message)
     end
@@ -80,7 +86,7 @@ RSpec.describe ContactsController, type: :controller do
       user.add_role(role.name)
       put :update, params: { id: user.id, role: role.id }
       expect(user.has_role?(role.name)).to be false
-      success_message = "Successfully removed #{user.first_name.capitalize} from "\
+      success_message = "Successfully removed #{user.first_name} from "\
       "#{role.name.capitalize} team!"
       expect(flash[:success]).to eq(success_message)
     end
@@ -92,21 +98,22 @@ RSpec.describe ContactsController, type: :controller do
       sign_in(coach)
     end
 
-    it 'deletes the team when given a correct team name' do
-      role = create(:role)
-      delete :destroy, params: { name: role.name }
+    it 'archives the teams when the teams ids' do
+      role1 = create(:role)
+      role2 = create(:role)
+      delete :destroy, params: { roles: [role1.id, role2.id] }
       # Count is one because the coach_user has a role
-      expect(Role.count).to eq(1)
-      success_message = "Successfully removed #{role.name.capitalize} team."
+      expect(Role.where(archived: false).count).to eq(1)
+      success_message = "Successfully removed team(s): #{role1.name}, #{role2.name}"
       expect(flash[:success]).to eq(success_message)
     end
 
-    it 'gives an error message when the team name does not match any teams' do
+    it 'gives an error message when invalid roles passed' do
       create(:role)
-      delete :destroy, params: { name: 'random_name' }
+      delete :destroy, params: { roles: nil }
       # Count is two because there is the coach role and the one we created
-      expect(Role.count).to eq(2)
-      alert_message = 'Could not find team Random_name!'
+      expect(Role.where(archived: false).count).to eq(2)
+      alert_message = 'Must select at least one team to delete!'
       expect(flash[:alert]).to eq(alert_message)
     end
   end

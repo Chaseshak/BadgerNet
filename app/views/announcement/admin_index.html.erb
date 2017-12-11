@@ -1,6 +1,49 @@
 <h1>Announcements</h1>
-<div style="margin-top:1.5em;text-align:right;">
+<div style="float:right;">
     <button class="button-primary" onclick="toggleModal('new-announcement')" >New Announcement</button>
+</div>
+<div class="info-block-wrapper" style="margin-top:1em;">
+    <div class="info-block">
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Sender</th>
+                    <th>Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @announcements.each_with_index do |announcement, index| %>
+                    <tr>
+                        <td><%= announcement.title%></td>
+                        <td><%= (announcement.created_at).in_time_zone('Central Time (US & Canada)').strftime("%b %-d, %Y at %-I:%M%p") %></td>
+                        <td>
+                            <% if announcement.sms && announcement.email %>
+                                <%= 'Email, SMS' %>
+                            <% elsif announcement.sms%>
+                                <%= 'SMS' %>
+                            <% elsif announcement.email%>
+                                <%= 'Email' %>
+                            <% end %>
+                        </td>
+                        <td><%= announcement.sender %></td>
+                        <td>
+                            <%= button_to 'Delete', { action: 'destroy', id: announcement.id }, method: :delete, class: 'button-danger'%>
+                            <button class="button-primary" onclick="toggleModal('show-announcement-<%= index %>')">View</button>
+                            <div class="modal hidden" id="show-announcement-<%= index %>">
+                            <div class="modal-content">
+                                <div class="modal-close" onclick="toggleModal('show-announcement-<%= index %>')">&times;</div>
+                                <%= render partial: 'show', locals: {announcement: announcement} %>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <% end %>
+            </tbody>
+        </table>
+    </div>
 </div>
 <div class="modal hidden" id="new-announcement">
     <div class="modal-content">
@@ -9,47 +52,3 @@
         <%= render 'announcement/new' %>
     </div>
 </div>
-<table>
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>Content</th>
-            <th>Time</th>
-            <th>Type</th>
-            <th>Sender</th>
-            <th>Options</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <% @announcements.reverse.each do |announcement, index| %>
-            <tr>
-                <td><%= announcement.title%></td>
-                <td><%= truncate(announcement.content, :length => 78) %></td>
-                <td><%= (announcement.created_at).strftime("%I:%M%p, %d %b. %Y") %></td>
-                <td>
-                    <% if announcement.sms && announcement.email %>
-                        <%= 'Both' %>
-                    <% elsif announcement.sms%>
-                        <%= 'SMS' %>
-                    <% elsif announcement.email%>
-                        <%= 'Email' %>
-                    <% end %>
-                </td>
-                <td><%= announcement.sender %></td>
-                <td>
-                    <%= button_to 'Delete', { action: 'destroy', id: announcement.id }, method: :delete, class: 'button-danger'%>
-                </td>
-                <td>
-                    <button class="button-primary" onclick="toggleModal('show-announcement-<%= index %>')">Show</button>
-                    <div class="modal hidden" id="show-announcement-<%= index %>">
-                    <div class="modal-content">
-                        <div class="modal-close" onclick="toggleModal('show-announcement-<%= index %>')">&times;</div>
-                        <%= render partial: 'show', locals: {announcement: announcement} %>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            <% end %>
-    </tbody>
-</table>

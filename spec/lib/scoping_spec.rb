@@ -63,7 +63,7 @@ describe Scoping::Retrieve do
   context 'raw_sql(table_name, user)' do
     let(:athlete) { create(:athlete_user) }
     it 'returns the correct raw sql' do
-      correct_sql = 'SELECT documents.* FROM users '\
+      correct_sql = 'SELECT DISTINCT(documents.*) FROM users '\
       'INNER JOIN users_roles ON users.id = users_roles.user_id '\
       'INNER JOIN scopes ON scopes.role_id = users_roles.role_id '\
       'INNER JOIN documents ON documents.id = scopes.resource_id '\

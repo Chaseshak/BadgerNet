@@ -4,9 +4,7 @@ Navigation
 ==========================================================================
 */
 
-// navbar colors
-$navbar-gradient-start: #1E87F0;
-$navbar-gradient-end: #28A5F5;
+@import "colors";
 
 .navbar-container {
     padding: 0 1.25em 0 1.25em;
@@ -15,7 +13,7 @@ $navbar-gradient-end: #28A5F5;
     display: flex;
     align-items: center;
     box-sizing: border-box;
-    background: linear-gradient(120deg, $navbar-gradient-start, $navbar-gradient-end);
+    background: linear-gradient(120deg, $primary-theme-color, $secondary-theme-color);
     box-shadow: 0 5px 15px rgba(0,0,0,0.08);
 }
 

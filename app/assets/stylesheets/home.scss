@@ -4,24 +4,14 @@ Homepage
 ==========================================================================
 */
 
-table.one {
-    float:left;
-    width:65%;
-    box-shadow: 1px 1px 10px #999;
+.support-services {
+    margin-top: 1em;
 }
 
-table.two {
-    float: right;
-    width: 30%;
-    box-shadow: 1px 1px 10px #999;
+.support-services-link {
+    display: block;
 
-    a:link, a:visited {
-        background: linear-gradient(120deg, $navbar-gradient-start, $navbar-gradient-end);
-        color: white;
-        padding: 10px 25px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
+    &:not(:first-child) {
+        margin-top: 0.65em;
     }
 }
-

@@ -2,15 +2,19 @@
     <div class="info-block">
         <h2>Settings</h2>
         <%= form_for @user, url: "/settings/#{@user.id}", method: :put do |f| %>
-        <%= f.label "First Name" %>
-        <%= f.text_field :first_name, class: 'input' %>
-        <%= f.label "Last Name" %>
-        <%= f.text_field :last_name, class: 'input' %>
-        <%= f.label "Phone Number" %>
-        <%= f.text_field :phone, class: 'input' %>
-        <div style="margin-top:1.5em;">
-            <%= f.submit "Update Profile", class: 'button-primary' %>
-        </div>
+            <%= f.label "First name" %>
+            <%= f.text_field :first_name, class: 'input' %>
+            <%= f.label "Last name" %>
+            <%= f.text_field :last_name, class: 'input' %>
+            <%= f.label "Phone number" %>
+            <%= f.text_field :phone, class: 'input' %>
+            <%= f.label "Enter new password" %>
+            <%= f.text_field :password, class: 'input', type: 'password' %>
+            <%= f.label "Confirm new password" %>
+            <%= f.text_field :confirm_password, class: 'input', type: 'password' %>
+            <div style="margin-top:1.5em;">
+                <%= f.submit "Update Profile Information", class: 'button-primary' %>
+            </div>
         <% end %>
     </div>
 </div>

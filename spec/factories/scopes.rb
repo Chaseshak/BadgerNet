@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :scope do
-    type 'type'
+    resource 'Document'
     resource_id 1
-    role nil
+    association :role
   end
 end

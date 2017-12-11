@@ -9,22 +9,24 @@ Imports base styles, as well as view-specific styles
 // import base styles
 @import "base/fonts";
 @import "base/forms";
+@import "base/blocks";
 @import "base/buttons";
 @import "base/pages";
 @import "base/tables";
 @import "base/modals";
 @import "base/navigation";
-@import "base/info_block";
 @import "base/forms";
 @import "base/banners";
 
 // view specific styles
 @import "announcements";
 @import "contacts";
-@import "documents";
 @import "home";
 @import "schedule";
 @import "permissions";
+
+// import libraries
+@import "libraries/toast";
 
 
 // css reset
@@ -47,6 +49,7 @@ p, span {
 
 p {
     margin: 1em 0 0 0;
+    line-height: 125%;
 }
 
 h1, h2, h3, h4, h5, h6 {

@@ -4,7 +4,7 @@ class PermissionsController < ApplicationController
   before_action :coach?
 
   def index
-    @users = User.all
+    @users = User.where.not id: current_user.id
   end
 
   def create
@@ -20,16 +20,12 @@ class PermissionsController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    coach_before = @user.coach? ? :coach : :athlete
-    begin
-      flip_permissions
-    # rubocop:disable Lint/HandleExceptions
-    rescue ActiveRecord::HasManyThroughAssociationNotFoundError
-      # Supressing this error because it is a bug in the Rolify library and is thrown
-      # even when a role is removed appropriately
-    end
-    # rubocop:enable Lint/HandleExceptions
-    update_permissions_message(coach_before)
+    @coach_before = @user.coach?
+    flip_permissions
+    flash[:success] = "Successfully changed #{@user.email}'s permission level"
+    redirect_to action: 'index'
+  rescue ActiveRecord::RecordNotFound
+    flash[:danger] = 'Unable to update user at this time.'
     redirect_to action: 'index'
   end
 
@@ -61,18 +57,10 @@ class PermissionsController < ApplicationController
   def flip_permissions
     if @user.coach?
       @user.add_role :athlete
-      @user.remove_role :coach
+      @user.delete_role :coach
     else
       @user.add_role :coach
-      @user.remove_role :athlete
-    end
-  end
-
-  def update_permissions_message(coach_before)
-    if @user.coach? != coach_before
-      flash[:success] = "Successfully changed #{@user.email}'s permission level"
-    else
-      flash[:warning] = "Unable to change #{@user.email}'s permission at this time"
+      @user.delete_role :athlete
     end
   end
 end

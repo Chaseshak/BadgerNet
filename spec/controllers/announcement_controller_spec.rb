@@ -59,7 +59,7 @@ RSpec.describe AnnouncementController, type: :controller do
       let(:a) { build(:announcement_sms) }
       it 'sends a text message' do
         # Stub the send text message function to make it a dummy method
-        allow_any_instance_of(AnnouncementHelper).to receive(:send_text_message)
+        allow_any_instance_of(AnnouncementController).to receive(:send_text_message)
         expect do
           post :create, params: { announcement: { email: a.email, sms: a.sms,
                                                   title: a.title, content: a.content } }
@@ -84,40 +84,6 @@ RSpec.describe AnnouncementController, type: :controller do
         )
         expect(response.status).to eq(302)
       end
-    end
-    context 'with an no vailed role or user entered' do
-      let(:a) { build(:announcement_sms) }
-      it 'redirects and gives an error message to the user' do
-        post :create, params: { announcement: { email: a.email, sms: a.sms,
-                                                title: a.title, content: a.content } }
-        expect(flash[:alert]).to include(
-          'Did not enter a vaild user or role'
-        )
-        expect(response.status).to eq(302)
-      end
-    end
-    context 'With a valid user entered' do
-      let(:a) { build(:announcement_sms) }
-      context 'with an invalid announcement' do
-        let(:a) do
-          # Build an invalid announcement (i.e. false email and sms)
-          invalid_a = build(:announcement_sms, email: false, sms: false)
-          # Tell active record not to validate the announcement object
-          invalid_a.save(validate: false)
-          invalid_a # return value which is stored in the variable 'a'.
-        end
-        it 'redirects and gives an error message to the user' do
-          athlete = create(:athlete_user)
-          post :create, params: { announcement: { email: a.email, sms: a.sms,
-                                                  title: a.title, content: a.content },
-                                  fname: athlete.first_name, lname: athlete.last_name }
-          expect(flash[:alert]).to include(
-            'Please select a send type before submitting announcement'
-          )
-          expect(response.status).to eq(302)
-        end
-      end
-      
     end
   end
 

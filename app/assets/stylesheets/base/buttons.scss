@@ -4,6 +4,11 @@ Buttons
 ==========================================================================
 */
 
+@import "colors";
+@import "navigation";
+@import "fonts";
+
+// all buttons
 .button-default,
 .button-primary,
 .button-danger {
@@ -21,6 +26,16 @@ Buttons
     &:active { transition: 0s linear; }
 }
 
+// buttons that require white text
+.button-primary,
+.button-danger {
+    color: white;
+}
+
+a.button-primary {
+    color: white;
+}
+
 .button-default {
     background-color: #f1f1f1;
 
@@ -30,7 +45,6 @@ Buttons
 
 .button-primary {
     background-color: #2889ED;
-    color: white;
 
     &:hover { background-color: #1C7DE2; }
     &:active { background-color: #1970CA; }
@@ -38,8 +52,19 @@ Buttons
 
 .button-danger {
     background-color: #EE5370;
-    color: white;
 
     &:hover { background-color: #EB3D5E; }
     &:active { background-color: #E9264B; }
+}
+
+// emphasized links
+.link-emphasized {
+    font-size: 0.9em;
+    display: inline-block;
+    margin: 0.75em 0 0 0;
+    padding: 0.35em 0.85em 0.35em 0.85em;
+    border-radius: 2em;
+    background: linear-gradient(120deg, $primary-theme-color, $secondary-theme-color);
+    color: white;
+    font-weight: $font-weight-bold;
 }

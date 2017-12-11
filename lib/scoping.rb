@@ -32,7 +32,7 @@ module Scoping
     end
 
     def raw_sql(table_name, user)
-      "SELECT #{table_name}.* FROM users "\
+      "SELECT DISTINCT(#{table_name}.*) FROM users "\
       'INNER JOIN users_roles ON users.id = users_roles.user_id '\
       'INNER JOIN scopes ON scopes.role_id = users_roles.role_id '\
       "INNER JOIN #{table_name} ON #{table_name}.id = scopes.resource_id "\

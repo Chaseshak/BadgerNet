@@ -6,8 +6,11 @@ class SettingsController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    if @user.update_attributes(user_params)
+    if params[:user][:password] != params[:user][:confirm_password]
+      flash[:danger] = 'Password Confirmation Does Not Match'
+    elsif @user.update_attributes(user_params)
       flash[:success] = 'User Profile Sucessfully Updated'
+      bypass_sign_in(@user)
     else
       check_validation_errors
     end
@@ -17,7 +20,8 @@ class SettingsController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :phone)
+    params.require(:user).permit(:first_name,
+                                 :last_name, :phone, :password, :confirm_password)
   end
 
   def check_validation_errors

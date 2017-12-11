@@ -8,10 +8,12 @@
             <div class="navbar-menu-item"><%= link_to "SCHEDULE", schedule_path %></div>
             <div class="navbar-menu-item"><%= link_to "ANNOUNCEMENTS", "/announcement" %></div>
             <div class="navbar-menu-item"><%= link_to "DOCUMENTS ", documents_path %></div>
-            <div class="navbar-menu-item"><%= link_to "CONTACTS", contacts_path %></div>
             <!-- render for admins only -->
             <% if current_user.coach? %>
+                <div class="navbar-menu-item"><%= link_to "TEAMS", contacts_path %></div>
                 <div class="navbar-menu-item"><%= link_to "PERMISSIONS", permissions_path %></div>
+            <% else %>
+                <div class="navbar-menu-item"><%= link_to "CONTACTS", contacts_path %></div>
             <% end %>
         </div>
         <div class="navbar-profile">

@@ -12,6 +12,11 @@ class Role < ApplicationRecord
   scopify
 
   def self.non_permissions_roles
-    Role.where.not(name: ['athlete', 'coach']).order('name ASC')
+    roles = Role.where(archived: false).order('name ASC')
+    roles.reject { |r| r.name == 'athlete' || r.name == 'coach' }
+  end
+
+  def cap_name
+    name.capitalize if name
   end
 end

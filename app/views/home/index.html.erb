@@ -1,4 +1,10 @@
 <h1>Welcome to BadgerNet!</h1>
-
-<%= render 'announcement_block' %>
-<%= render 'support_block' %>
+<div class="grid" style="margin-top: 1em;">
+    <div class="grid__col grid__col--2-of-3">
+        <%= render 'announcement_block' %>
+        <%= render 'document_block' %>
+    </div>
+    <div class="grid__col grid__col--1-of-3">
+        <%= render 'support_block' %>
+    </div>
+</div>

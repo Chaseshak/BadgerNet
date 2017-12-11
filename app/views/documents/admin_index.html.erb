@@ -1,32 +1,36 @@
 <h1>Documents</h1>
-<div style="margin-top:1.5em;text-align:right;">
-<button class="button-primary" onclick="toggleModal('new-document')" >New Document</button>
+<div style="float:right;">
+  <button class="button-primary" onclick="toggleModal('new-document')" >New Document</button>
+</div>
+<div class="info-block-wrapper" style="margin-top:1em;">
+    <div class="info-block">
+        <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Date Uploaded</th>
+                <th>Options</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @documents.each do |document| %>
+            <tr>
+                <td><%= document.name %></td>
+                <td><%= document.created_at.in_time_zone('Central Time (US & Canada)').strftime("%b %-d, %Y at %-I:%M%p") %></td>
+                <td>
+                    <%= link_to 'Download Document', document.attachment_url, class: 'button-primary' %>
+                    <%= button_to "Delete",  document, method: :delete, class: "button-danger", confirm: "Are you sure that you wish to delete #{document.name}?" %>
+                </td>
+            </tr>
+            <% end %>
+        </tbody>
+        </table>
+    </div>
 </div>
 <div class="modal hidden" id="new-document">
-<div class="modal-content">
-    <div class="modal-close" onclick="toggleModal('new-document')">&times;</div>
-    <h2>New Document</h2>
-    <%= render 'documents/new' %>
+    <div class="modal-content">
+        <div class="modal-close" onclick="toggleModal('new-document')">&times;</div>
+        <h2>New Document</h2>
+        <%= render 'documents/new' %>
+    </div>
 </div>
-</div>
-<br />
-<table class="table table-bordered table-striped">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Download Link</th>
-      <th>Date Uploaded</th>
-      <th>Options</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @documents.each do |document| %>
-      <tr>
-        <td><%= document.name %></td>
-        <td><%= link_to "Download Document", document.attachment_url %></td>
-        <td><%= document.created_at.strftime("%d %b. %Y") %></td>
-        <td><%= button_to "Delete",  document, method: :delete, class: "button-danger", confirm: "Are you sure that you wish to delete #{document.name}?" %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>

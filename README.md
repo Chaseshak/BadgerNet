@@ -16,9 +16,9 @@ process for the rowing team, but also have the potential to be used as intended,
 teams across campus.
 
 
-## [Requirements and Specifications](https://docs.google.com/a/wisc.edu/document/d/1ALu30ucsLwtQVPSXy7TYfbEb5RYqW2TiZ1LBREwukok/edit?usp=sharing)
+## [Requirements and Specifications](https://docs.google.com/a/wisc.edu/document/d/1gAdPAkvaDNVE49o0RkAB2j4luDTL61acY2U5jiWcgZk/edit?usp=sharing)
 
-## [Design and Planning](https://docs.google.com/a/wisc.edu/document/d/1Z0a4z89mLn_SAfXO4p3zN1T6kbIbGHQnuv7N-lqeADE/edit?usp=sharing)
+## [Design and Planning](https://docs.google.com/a/wisc.edu/document/d/1-rnstvInLwo8RdqzL6lavmdT60eLwlRIv4vweOJ0ilY/edit?usp=sharing)
 
 ## Versions
 - Ruby: 2.4.0

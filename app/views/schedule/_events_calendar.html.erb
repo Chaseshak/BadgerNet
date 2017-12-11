@@ -1,7 +1,7 @@
 <div class="calendar-container">
     <div class="timeline">
         <% calendar_hours.each do |hour| %>
-        <% 
+        <%
             if hour < 12 then display = hour.to_s + ' AM'
             elsif hour == 12 then display = hour.to_s + ' PM'
             else display = (hour - 12).to_s + ' PM'
@@ -21,7 +21,7 @@
             <% else %>
                 <% @schedule.events_on_day(i).each do |event| %>
                 <div class="single-event" style="transform:translateY(<%= event_block_offset(event) %>px);height:<%= event_block_height(event) %>px">
-                    <span class="single-event-label"><%= event.name %></span>
+                    <span class="single-event-label"><%= event.name.truncate(20) %></span>
                 </div>
                 <% end %>
             <% end %>

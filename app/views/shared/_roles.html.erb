@@ -2,4 +2,3 @@
 <%= label_tag 'roles[]', "Teams (Hold ctrl while clicking to select multiple teams)" %>
 <%= select_tag 'roles', options_from_collection_for_select(Role.non_permissions_roles, "id", "name"),
  multiple: true %>
-<br />

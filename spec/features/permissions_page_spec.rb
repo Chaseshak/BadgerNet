@@ -31,7 +31,8 @@ RSpec.feature 'Visiting the permissions page', type: :feature do
     end
 
     scenario 'Deleting a user should remove their information from the table' do
-      expect { page.all('input', class: 'button-danger')[1].click }
+      FactoryGirl.create(:athlete_user, email: 'test1@example.com')
+      expect { page.all('input', class: 'button-danger')[0].click }
         .to change { User.count }.by(-1)
     end
 

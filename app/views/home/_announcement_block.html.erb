@@ -1,24 +1,26 @@
-<table class="table table-bordered table-striped one">
-  <thead>
-    <tr>
-      <th><font size="5">Announcements</font></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @announcements.each_with_index do |announcement, index| %>
-      <tr>
-        <td><%= announcement.title %></td>
-        <td><%= truncate(announcement.content, :length => 80) %></td>
-        <td>
-          <button class="button-primary" onclick="toggleModal('show-announcement-<%= index %>')">Show</button>
-          <div class="modal hidden" id="show-announcement-<%= index %>">
-          <div class="modal-content">
-            <div class="modal-close" onclick="toggleModal('show-announcement-<%= index %>')">&times;</div>
-            <%= render partial: 'announcement/show', locals: {announcement: announcement} %>
-            </div>
-        </div>
-    </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="info-block-wrapper">
+    <div class="info-block">
+    <h2>Recent Announcements</h2>
+    <table style="margin-top:1em;">
+            <tbody>
+                <% @announcements.each_with_index do |announcement, index| %>
+                    <tr>
+                        <td><%= announcement.title %></td>
+                        <td><%= announcement.updated_at.in_time_zone('Central Time (US & Canada)').strftime("%b %-d, %Y")%></td>
+                        <td>
+                            <button class="button-primary" onclick="toggleModal('show-announcement-<%= index %>')">View</button>
+                            <div class="modal hidden" id="show-announcement-<%= index %>">
+                            <div class="modal-content">
+                                <div class="modal-close" onclick="toggleModal('show-announcement-<%= index %>')">&times;</div>
+                                <%= render partial: 'announcement/show', locals: {announcement: announcement} %>
+                            </div>
+                        </div>
+                        </td>
+                    </tr>
+                <% end %>
+            </tbody>
+        </table>
+        <button class="link-emphasized" onclick="window.location.href='announcement';">View More</button>
+    </div>
+    
+</div>

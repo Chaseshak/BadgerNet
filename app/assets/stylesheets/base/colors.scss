@@ -4,19 +4,23 @@ Colors
 ==========================================================================
 */
 
-// Body
+// body
 $background-color: #f7f7f7;
+
+// theme
+$primary-theme-color: #1E87F0;
+$secondary-theme-color: #28A5F5;
 
 // text
 $primary-text-color: black;
 $faded-text-color: rgba(0,0,0,0.25);
 
-// Permissions Links
+// permissions Links
 $permissions-link: #1E87F0;
 $permissions-link-focus: rgba(40, 137, 237, 0.45);
 $permissions-link-hover: rgba(40, 165, 245, 0.25);
 
-// Banner colors
+// banner colors
 $success-background: #dff0d8;
 $success-border: #d0e9c6;
 $success-text-color: #3c763d;

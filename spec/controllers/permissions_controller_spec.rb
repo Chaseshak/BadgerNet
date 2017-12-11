@@ -113,6 +113,13 @@ RSpec.describe PermissionsController, type: :controller do
         expect(flash[:success]).to eq(success_message)
       end
     end
+
+    context 'given bad params' do
+      it 'returns the error message' do
+        put :update, params: { id: -1 }
+        expect(flash[:danger]).to eq('Unable to update user at this time.')
+      end
+    end
   end
 
   describe 'DELETE #destroy' do

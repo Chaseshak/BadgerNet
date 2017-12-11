@@ -1,6 +1,6 @@
 # AnnouncementController: functions for announcemnt manuipulation
 # referenced https://www.codecademy.com/courses/learn-rails/lessons/one-model/exercises/one-model-view?action=lesson_resume
-# rubocop:disable ClassLength
+# referenced https://www.twilio.com/blog/2012/02/adding-twilio-sms-messaging-to-your-rails-app.html
 class AnnouncementController < ApplicationController
   include AnnouncementHelper
   before_action :coach?, except: %i[index show]
@@ -20,12 +20,8 @@ class AnnouncementController < ApplicationController
   end
 
   def create
-    @fname = params[:fname]
-    @lname = params[:lname]
     @announcement = Announcement.new(announcement_params)
-    if User.exists?(first_name: @fname, last_name: @lname)
-      user_announcement
-    elsif params[:roles]
+    if params[:roles]
       role_announcement
     else
       announcement_fail
@@ -63,11 +59,6 @@ class AnnouncementController < ApplicationController
     flash[:success] = 'Announcement sent'
   end
 
-  def announcement_success_personal
-    redirect_to '/announcement'
-    flash[:success] = 'Personal announcement sent'
-  end
-
   def announcement_fail
     redirect_to '/announcement'
     flash[:alert] = 'Did not enter a vaild user or role'
@@ -78,43 +69,24 @@ class AnnouncementController < ApplicationController
     flash[:alert] = 'Please select a send type before submitting announcement'
   end
 
-  def user_announcement
-    @to = User.find_by(first_name: @fname, last_name: @lname)
-    if @announcement.sms || @announcement.email
-      user_announcement_sender
-      announcement_success_personal
-    else
-      announcement_fail_no_send_method
-    end
-  end
-
-  def user_announcement_sender
-    if @announcement.sms && @announcement.email
-      CommentMailer.new_comment(@to, @announcement.title, @announcement.content,
-                                current_user).deliver_now
-      send_text_message(@announcement.content)
-    elsif @announcement.email
-      CommentMailer.new_comment(@to, @announcement.title, @announcement.content,
-                                current_user).deliver_now
-    elsif @announcement.sms
-      send_text_message(@announcement.content)
-    end
-  end
-
+  # rubocop:disable MethodLength
   def role_announcement
     if @announcement.sms && @announcement.save
-      send_text_message(@announcement.content)
-      role_announcements
+      send_text_message(@announcement.title, @announcement.content)
+      send_email
       announcement_success
     elsif @announcement.save
-      role_announcements
+      send_email
+      announcement_success
+    elsif @announcement.sms
+      send_text_message(@announcement.title, @announcement.content)
       announcement_success
     else
       announcement_fail_no_send_method
     end
   end
 
-  def role_announcements
+  def send_email
     sent = false
     User.all.each do |u|
       params[:roles].each do |r|
@@ -124,5 +96,21 @@ class AnnouncementController < ApplicationController
         sent = true
       end
     end
+  end
+
+  def send_text_message(subject, words)
+    number_to_send_to = '2066180749' # "params[:number_to_send_to]"
+
+    twilio_sid = 'ACc17e1968205992bb82bdb0ba8de37732' # this is public
+    twilio_token = ENV['TWILIO_TOKEN'] # private, environment variable
+    twilio_phone_number = '2062078212'
+
+    @twilio_client = Twilio::REST::Client.new(twilio_sid, twilio_token)
+
+    @twilio_client.messages.create(
+      from: "+1#{twilio_phone_number}",
+      to: number_to_send_to,
+      body: subject + ' - ' + words
+    )
   end
 end

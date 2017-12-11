@@ -50,6 +50,7 @@ group :development, :test do
   gem 'rails-controller-testing', '~> 1.0.2'
   gem 'factory_girl_rails', '~> 4.8.0'
   gem 'selenium-webdriver', '~> 3.6.0'
+  gem 'shoulda-matchers', '~> 3.1'
   gem 'simplecov', '~> 0.15.1', require: false
 end
 

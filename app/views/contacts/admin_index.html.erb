@@ -1,68 +1,78 @@
-<h1>Contacts</h1>
-<button class="button-primary" onclick="toggleModal('new-team')" style="float: right; margin: 1.25em 0 0 0;">New Team</button>
-<header>
-  <br/>
-Click the team in the "Teams In" category to remove user from team, Click team in "Other Team" to add user to team.
-</header>
-<table>
-    <thead>
-        <tr>
-            <th>First</th>
-            <th>Last</th>
-            <th>Email</th>
-            <th>Phone Number</th>
-        </tr>
-    </thead>
-    <tbody>
-        <% @users.each do |user| %>
-            <!--for each user -->
-            <tr>
-                <td><%= user.first_name %></td>
-                <td><%= user.last_name %></td>
-                <td><%= user.email %></td>
-                <td><%= user.phone %></td>
-              </tr>
-              <tr>
-
-                <td><strong>Current Teams:</strong></td>
-                <td colspan='3'>
-                          <% has_roles = false %>
-                          <% user.roles.sort_by{ |r| r.name }.each do |role|%>
-                            <% next if role.name == 'athlete' || role == 'coach' %>
-                            <% has_roles = true %>
-                            <%= button_to role.name.capitalize, {action: 'update', id: user.id, role: role.id}, method: :put, class:"button-danger" %>
+<h1>Teams</h1>
+<div style="float:right;">
+    <button class="button-primary" onclick="toggleModal('new-team')">New Team</button>
+    <button class="button-danger" onclick="toggleModal('delete-team')">Delete Teams</button>
+</div>
+<p>Check the boxes under a user's name to add them to a team. Un-check the box to remove them from the team.</p>
+<div class="info-block-wrapper" style="margin-top:1em;">
+    <div class="info-block">
+        <table class="contacts-team-selection-table">
+            <thead>
+                <tr>
+                    <th>First</th>
+                    <th>Last</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @users.each do |user| %>
+                    <tr>
+                        <% unless user.first_name %>
+                            <td colspan='4'><i>Pending Invite</i></td>
+                        <% else %>
+                            <td><%= user.first_name.capitalize %></td>
+                            <td><%= user.last_name.capitalize %></td>
+                            <td><%= user.email %></td>
+                            <td><%= user.phone %></td>
                         <% end %>
-                        <%= "Not in any teams!" unless has_roles %>
-                      </td>
-                      </tr>
-                      <tr>
-                        <td><strong>Other Teams:</strong></td>
-                        <td colspan='3'>
-                        <% @roles.each do |role|%>
-                        <%if !user.roles.include?(role)%>
-                          <%= button_to role.name.capitalize, {action: 'update', id: user.id, role: role.id}, method: :put, class:"button-danger"%>
-                        <% end %>
-                        <% end %>
-                      </td>
-</tr>
-<tr><td></td></tr>
-
-        <% end %>
-    </tbody>
-</table>
+                    </tr>
+                    <tr style="border-top:none;">
+                        <td colspan="4" style="padding:0;">
+                            <div class="contacts-team-selection">
+                                <% @roles.sort_by{ |r| r.name }.each do |role|%>
+                                    <div class="contacts-team-selection-item">
+                                        <%= form_tag("/contacts/#{user.id}?role=#{role.id}", method: "put") do %>
+                                            <%= check_box_tag role.name, role.id, user.has_role?(role.name), onclick: "document.getElementById('#{user.id}#{role.id}').click();" %>
+                                            <%= label_tag role.name %>
+                                            <%= submit_tag('', class: 'hidden', id: "#{user.id}#{role.id}") %>
+                                        <% end %>
+                                    </div>
+                                <% end %>
+                            </div>
+                        </td>
+                    </tr>
+                <% end %>
+            </tbody>
+        </table>
+    </div>
+</div>
 <div class="modal hidden" id="new-team">
     <div class="modal-content">
         <div class="modal-close" onclick="toggleModal('new-team')">&times;</div>
         <h2>New Team</h2>
         <%= form_tag do %>
-            <%= label_tag(:name, "Name:") %>
-            <%= text_field_tag(:name) %><br>
-
-            <%= button_to "Add Role", {action: 'create', name: :name}, method: :post, class:"button-danger"%>
-            <%= button_to "Remove Role", {action: 'destroy', name: :name}, method: :delete, class:"button-danger"%>
+            <%= label_tag(:name, "Name") %>
+            <%= text_field_tag(:name) %>
+            <div style="margin-top:1.5em;text-align:right;">
+                <button class="button-default" onclick="toggleModal('new-team')">Cancel</button>
+                <%= button_to "Add Team", { action: 'create', name: :name }, method: :post, class:"button-primary" %>
+            </div>
         <% end %>
-        <div style="margin-top:1.5em;text-align:right;">
-            <button class="button-default" onclick="toggleModal('new-team')">Cancel</button>
-        </div>
+    </div>
+</div>
+
+<div class="modal hidden" id="delete-team">
+    <div class="modal-content">
+        <div class="modal-close" onclick="toggleModal('delete-team')">&times;</div>
+        <h2>Delete Teams</h2>
+        <%= form_tag(contacts_destroy_path, method: :delete) do %>
+            <p> Select teams to delete, then select "Delete Teams".
+            <%= render 'shared/roles' %>
+            <div style="margin-top:1.5em;text-align:right;">
+                <button class="button-default" type='button' onclick="toggleModal('delete-team')">Cancel</button>
+                <%= submit_tag('Delete Teams', class: 'button-danger') %>
+            </div>
+        <% end %>
     </div>
 </div>

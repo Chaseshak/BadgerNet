@@ -24,10 +24,7 @@ module ScheduleHelper
 
   # Finds all events on a given day, 0 being Sunday
   def all_events_on_day(day_num)
-    result = []
-    events = Event.all
-    events.each { |event| result << event if event.days.include? day_num }
-    result
+    Event.scoped_by_day(day_num, params[:roles])
   end
 
   # Height (in pixels) of a single event block
