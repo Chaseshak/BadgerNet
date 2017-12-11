@@ -2,7 +2,8 @@
     <%= f.label :name %>
     <%= f.text_field :name,required: true, maxlength: 30 %>
     <%= f.label :attachment %>
-    <%= f.file_field :attachment,required: true %>
+    <%= f.file_field :attachment, accept:'pdf,doc,docx,csv,jpg,xlsx,xls,
+    xlt,txt,png,heic,ppt,tiff,pptx', required: true %>
     <%= render 'shared/roles' %>
     <div style="margin-top:1.5em;text-align:right;">
         <button class="button-default" onclick="toggleModal('new-document')">Cancel</button>

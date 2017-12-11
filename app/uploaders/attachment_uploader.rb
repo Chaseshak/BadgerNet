@@ -7,4 +7,8 @@ class AttachmentUploader < CarrierWave::Uploader::Base
   def store_dir
     "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
+
+  def extension_whitelist
+    %w[pdf doc docx csv jpg xlsx xls xlt txt png heic ppt tiff pptx]
+  end
 end
