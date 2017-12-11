@@ -8,24 +8,25 @@ $modal-max-width: 32em;
 
 .modal {
     position: fixed;
-    z-index: 1;
+    z-index: 2;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.65); // fade the background
+    background-color: rgba(0,0,0,0.75); // fade the background
 }
 
 .modal-content {
-    max-width: $modal-max-width;
-    margin: 12em auto 0 auto;
+    width: $modal-max-width;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     padding: 1.5em;
     background-color: white;
     border-radius: 0.5em;
 
-    h2 {
-        margin: 0;
-    }
+    h2 { margin: 0; }
 }
 
 .modal-close {

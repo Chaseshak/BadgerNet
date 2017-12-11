@@ -30,7 +30,10 @@ Buttons
 .button-primary,
 .button-danger {
     color: white;
-    a { color: white; }
+}
+
+a.button-primary {
+    color: white;
 }
 
 .button-default {

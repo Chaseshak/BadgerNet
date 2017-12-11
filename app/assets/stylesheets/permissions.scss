@@ -5,24 +5,32 @@ Permissions
 */
 
 @import "base/colors";
+@import "base/fonts";
 
-.edit-permissions {
-  outline: none;
-  font-size: 10px;
-  text-decoration: none;
-  padding: 2px 1px 0;
+.permissions-sorting {
+    p {
+        display: inline-block;
+        margin: 0;
+        font-weight: $font-weight-bold;
+    }
 }
 
-.edit-permissions:link, :visited {
-  color: $permissions-link;
-}
+.permissions-edit {
+    outline: none;
+    font-size: 10px;
+    text-decoration: none;
+    padding: 2px 1px 0;
 
-.edit-permissions:focus {
-  border-bottom: 1px solid;
-  background: $permissions-link-focus;
-}
+    &:link { color: $permissions-link; }
+    &:visited { color: $permissions-link; }
 
-.edit-permissions:hover {
-  border-bottom: 1px solid;
-  background: $permissions-link-hover;
+    &:focus {
+        border-bottom: 1px solid;
+        background: $permissions-link-focus;
+    }
+
+    &:hover {
+        border-bottom: 1px solid;
+        background: $permissions-link-hover;
+    }
 }

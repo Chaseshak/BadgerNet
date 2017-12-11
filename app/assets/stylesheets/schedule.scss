@@ -16,75 +16,75 @@ $event-block-color: #2979ad;
 .calendar-container {
     position: relative;
     box-sizing: border-box;
+}
 
-    .timeline {
-        position: relative;
-        padding: $calendar-header-height 0 0 0;
+.timeline {
+    position: relative;
+    padding: $calendar-header-height 0 0 0;
+}
+
+.timeline-entry {
+    height: $grid-segment-height - 1px; // to account for border size
+    border-top: 1px solid rgba(0, 0, 0, .05); // acts as a grid line
+    
+    // time labels
+    span {
+        display: inline-block;
+        width: 3.25em;
+        font-size: 0.8em;
+        padding: 0.75em;
+        transform: translateY(-50%);
+        text-align: right;
+        font-weight: $font-weight-bold;
+        color: $faded-text-color;
+        background-color: white;
     }
+}
 
-    .timeline-entry {
-        height: $grid-segment-height - 1px; // to account for border size
-        border-top: 1px solid rgba(0, 0, 0, .05); // acts as a grid line
+.events {
+    position: absolute;
+    top: 0;
+    left: 5em; // leave room for timeline labels
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: stretch;
+    align-content: flex-start;
+}
 
-        // time labels
-        span {
-            display: inline-block;
-            width: 3.25em;
-            font-size: 0.8em;
-            padding: 0.75em;
-            transform: translateY(-50%);
-            text-align: right;
-            font-weight: $font-weight-bold;
-            color: $faded-text-color;
-            background-color: $background-color;
-        }
+.events-group {
+    position: relative;
+    flex-grow: 1; // fill width of parent
+    flex-basis: 0; // elements resize evenly
+}
+
+.events-group-label {
+    height: $calendar-header-height;
+    display: flex;
+    align-items: center;
+    
+    span {
+        font-weight: $font-weight-bold;
+        color: $faded-text-color;
     }
+}
 
-    .events {
-        position: absolute;
-        top: 0;
-        left: 5em; // leave room for timeline labels
-        right: 0;
-        bottom: 0;
-        display: flex;
-        flex-flow: row nowrap;
-        align-items: stretch;
-        align-content: flex-start;
-    }
+.single-event {
+    position: absolute;
+    left: 0;
+    top: $calendar-header-height;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0.25em 0.5em 0.25em 0.5em;
+    background-color: $event-block-color;
+    border-radius: 0.25em;
+    border: 1px solid $background-color;
+    z-index: 1;
+}
 
-    .events-group {
-        position: relative;
-        flex-grow: 1; // fill width of parent
-        flex-basis: 0; // elements resize evenly
-    }
-
-    .events-group-label {
-        height: $calendar-header-height;
-        display: flex;
-        align-items: center;
-
-        span {
-            font-weight: $font-weight-bold;
-            color: $faded-text-color;
-        }
-    }
-
-    .single-event {
-        position: absolute;
-        left: 0;
-        top: $calendar-header-height;
-        width: 100%;
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0.25em 0.5em 0.25em 0.5em;
-        background-color: $event-block-color;
-        border-radius: 0.25em;
-        border: 1px solid $background-color;
-        z-index: 1;
-    }
-
-    .single-event-label {
-        color: white;
-        font-size: 0.85em;
-    }
+.single-event-label {
+    color: white;
+    font-size: 0.75em;
 }

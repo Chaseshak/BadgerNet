@@ -1,5 +1,5 @@
 <h1>Team Availability</h1>
-<h2>Filter by Teams:</h3>
+<p>Select a specific team to view their availability.</p>
 <%= form_tag("/schedule", method: "get") do %>
     <%= render 'shared/roles' %>
     <%= submit_tag('Filter', class: 'button-primary') %>
@@ -13,4 +13,8 @@
         <% end %>
     </p>
 <% end %>
-<%= render 'events_calendar' %>
+<div class="info-block-wrapper" style="margin-top:1em;">
+    <div class="info-block">
+        <%= render 'events_calendar' %>
+    </div>
+</div>

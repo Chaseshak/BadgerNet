@@ -1,24 +1,23 @@
-<% if !flash[:notice].blank? %>
-  <div class="alert alert-info">
-  <%= flash[:notice] %>
+<h1>Documents</h1>
+<div class="info-block-wrapper" style="margin-top:1em;">
+    <div class="info-block">
+        <table>
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Date Uploaded</th>
+                <th>Download</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @documents.each do |document| %>
+                <tr>
+                    <td><%= document.name %></td>
+                    <td><%= document.created_at.in_time_zone('Central Time (US & Canada)').strftime("%b %-d, %Y at %-I:%M%p") %></td>
+                    <td><%= link_to 'Download Document', document.attachment_url, class: 'button-primary' %></td>
+                </tr>
+            <% end %>
+            </tbody>
+    </table>
   </div>
-<% end %>
-<br />
-<table class="table table-bordered table-striped">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Download Link</th>
-      <th>Date Uploaded</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @documents.each do |document| %>
-      <tr>
-        <td><%= document.name %></td>
-        <td><%= link_to "Download Document", document.attachment_url, class: 'button-primary', style: 'color: white;' %></td>
-        <td><%= document.created_at.strftime("%d %b. %Y") %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+</div>
