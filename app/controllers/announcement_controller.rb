@@ -71,11 +71,11 @@ class AnnouncementController < ApplicationController
 
   # rubocop:disable MethodLength
   def role_announcement
-    if @announcement.sms && @announcement.save
+    if @announcement.sms && @announcement.email
       send_text_message(@announcement.title, @announcement.content)
       send_email
       announcement_success
-    elsif @announcement.save
+    elsif @announcement.email
       send_email
       announcement_success
     elsif @announcement.sms

@@ -58,12 +58,29 @@ RSpec.describe AnnouncementController, type: :controller do
     context 'creating an announcement as a text message' do
       let(:a) { build(:announcement_sms) }
       it 'sends a text message' do
+        role = [Role.create(name: 'test').id]
+
         # Stub the send text message function to make it a dummy method
         allow_any_instance_of(AnnouncementController).to receive(:send_text_message)
         expect do
           post :create, params: { announcement: { email: a.email, sms: a.sms,
-                                                  title: a.title, content: a.content } }
+                                                  title: a.title, content: a.content },
+                                  roles:  role }
         end.to change { Announcement.count }.by(1)
+      end
+    end
+    context 'creating an announcement as an email' do
+      let(:a) { build(:announcement_email) }
+      it 'sends an email' do
+        role = [Role.create(name: 'test').id]
+
+        # Stub the send text message function to make it a dummy method
+        allow_any_instance_of(AnnouncementController).to receive(:send_email)
+        expect do
+          post :create, params: { announcement: { email: a.email, sms: a.sms,
+                                                  title: a.title, content: a.content },
+                                  role: role }
+        end.to change { Announcement.count }.by(0)
       end
     end
     context 'with an invalid announcement' do
