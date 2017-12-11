@@ -10,6 +10,6 @@
             send_method = ', sent via SMS'
         end
     %>
-    <p class="announcement-tagline"><%= announcement.created_at.strftime("%B %-d at %-I%p") %><%= send_method %></p>
+    <p class="announcement-tagline"><%= announcement.created_at.in_time_zone('Central Time (US & Canada)').strftime("%B %-d at %-I%p") %><%= send_method %></p>
     <p class="announcement-content"><%= announcement.content %>
 </div>

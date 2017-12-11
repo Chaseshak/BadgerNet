@@ -1,8 +1,8 @@
 <%= form_for @document, url: { action: "create" } do |f| %>
     <%= f.label :name %>
-    <%= f.text_field :name,:required => 'required' %>
+    <%= f.text_field :name,required: true, maxlength: 30 %>
     <%= f.label :attachment %>
-    <%= f.file_field :attachment,:required => 'required' %>
+    <%= f.file_field :attachment,required: true %>
     <%= render 'shared/roles' %>
     <div style="margin-top:1.5em;text-align:right;">
         <button class="button-default" onclick="toggleModal('new-document')">Cancel</button>

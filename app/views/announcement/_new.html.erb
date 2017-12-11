@@ -2,21 +2,21 @@
     <%= f.label "Send via" %>
     <div class="check-box-group">
         <div class="check-box-group-item">
-        <%= f.check_box :email%>  <%# figure out how to do validation %>
+        <%= f.check_box :email%>  
         <%= f.label :email, 'Email'%>
         </div>
         <div class="check-box-group-item">
         <%= f.check_box :sms%>
         <%= f.label :sms, 'SMS'%>
         </div>
-    </div>
-    <%= render 'shared/roles' %>
-    <%= f.label :title, 'Title'%>
-    <%= f.text_field :title %>
-    <%= f.label 'Message' %>
-    <%= f.text_area :content, required: true %>
-    <div style="margin-top:1.5em;text-align:right;">
-        <button class="button-default" onclick="toggleModal('new-announcement')">Cancel</button>
-        <%= f.submit "Send Announcement", class: "button-primary"%>
-    </div>
+  </div>
+  <%= render 'shared/roles' %>
+  <%= f.label :title, 'Title'%>
+  <%= f.text_field :title, maxlength: 30 %>
+  <%= f.label 'Message' %>
+  <%= f.text_area :content, required: true, maxlength: 7500%>
+  <div style="margin-top:1.5em;text-align:right;">
+    <button class="button-default" onclick="toggleModal('new-announcement')">Cancel</button>
+    <%= f.submit "Send Announcement", class: "button-primary"%>
+  </div>
 <% end %>
