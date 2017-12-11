@@ -1,5 +1,6 @@
 # AnnouncementController: functions for announcemnt manuipulation
 # referenced https://www.codecademy.com/courses/learn-rails/lessons/one-model/exercises/one-model-view?action=lesson_resume
+# rubocop:disable ClassLength
 class AnnouncementController < ApplicationController
   include AnnouncementHelper
   before_action :coach?, except: %i[index show]
