@@ -9,7 +9,7 @@ class User < ApplicationRecord
   validates :first_name, :last_name, :phone, presence: true
   validates :phone, format: { with: /\A(\d{10}|\(?\d{3}\)?[-. ]\d{3}[-.]\d{4})\z/,
                               message: 'Please enter a 10 digit US Phone Number' }
-  scopify
+  validates :password, length: { in: 6..128 }, on: :update, allow_blank: true
 
   attr_accessor :confirm_password
 
@@ -28,10 +28,6 @@ class User < ApplicationRecord
     !has_role?(role)
   end
 
-  def self.all_users
-    User.order('last_name ASC')
-  end
-
   def role_ids
     non_permissions_roles = roles.reject { |r| r.name == 'coach' || r.name == 'athlete' }
     non_permissions_roles.map(&:id).to_a
@@ -43,5 +39,15 @@ class User < ApplicationRecord
 
   def last_name
     self[:last_name].capitalize if self[:last_name]
+  end
+
+  def self.all_users
+    User.order('last_name ASC')
+  end
+
+  private
+
+  def password_required?
+    new_record? ? super : false
   end
 end
