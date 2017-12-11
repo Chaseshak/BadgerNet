@@ -5,15 +5,16 @@ RSpec.describe CommentMailer, type: :mailer do
     let!(:user) { create(:coach_user) }
 
     it 'renders the headers' do
-      mail = CommentMailer.new_comment(user)
+      mail = CommentMailer.new_comment(user, 'new email', 'test', user)
       expect(mail.subject).to eq('new email')
       expect(mail.to).to eq([user.email])
       expect(mail.from).to eq(['badgernet.announcement@gmail.com'])
     end
 
     it 'renders the body' do
-      mail = CommentMailer.new_comment(user)
-      expect(mail.body.encoded).to include('this is the email')
+      u = create(:coach_user)
+      mail = CommentMailer.new_comment(user, 'test', 'test', u)
+      expect(mail.body.encoded).to include('test')
     end
   end
 end
