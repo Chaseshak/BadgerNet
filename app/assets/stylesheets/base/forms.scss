@@ -45,8 +45,6 @@ input:focus {
 
 input[type="text"],
 input[type="email"],
-input[type="personal"]
-input[type="group"]
 input[type="password"] {
     width: 100%;
     margin: $input-margin;
@@ -58,8 +56,6 @@ input[type="password"] {
 
 input[type="text"]:focus,
 input[type="email"]:focus,
-input[type="personal"]:focus,
-input[type="group"]:focus,
 input[type="password"]:focus,
 input[type="time"]:focus,
 textarea:focus {
