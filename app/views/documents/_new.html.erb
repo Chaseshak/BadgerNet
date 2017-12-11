@@ -2,13 +2,8 @@
     <%= f.label :name %>
     <%= f.text_field :name,required: true, maxlength: 30 %>
     <%= f.label :attachment %>
-<<<<<<< HEAD
-    <td> (.pdf .doc .docx .csv .jpg .xlsx .xls .xlt .txt .png .heic
-      .ppt .tiff .pptx)</td>
-    <%= f.file_field :attachment,:required => 'required' %>
-=======
-    <%= f.file_field :attachment,required: true %>
->>>>>>> 454c630b630ab2ce6cc85fda108d3a8b046bea83
+    <%= f.file_field :attachment, accept:'pdf,doc,docx,csv,jpg,xlsx,xls,
+    xlt,txt,png,heic,ppt,tiff,pptx', required: true %>
     <%= render 'shared/roles' %>
     <div style="margin-top:1.5em;text-align:right;">
         <button class="button-default" onclick="toggleModal('new-document')">Cancel</button>
