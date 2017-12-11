@@ -2,8 +2,10 @@
 <p>Select a specific team to view their availability.</p>
 <%= form_tag("/schedule", method: "get") do %>
     <%= render 'shared/roles' %>
-    <%= submit_tag('Filter', class: 'button-primary') %>
-    <%= link_to 'Clear Filters', schedule_path, class: 'button-primary', style: 'color: white;' %>
+    <div style="margin-top:0.5em;">
+        <%= submit_tag('Filter', class: 'button-primary') %>
+        <%= link_to 'Clear Filters', schedule_path, class: 'button-primary', style: 'color: white;' %>
+    </div>
 <% end %>
 <% unless params[:roles].blank? %>
     <p> Currently filtering by:
