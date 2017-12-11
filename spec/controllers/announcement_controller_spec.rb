@@ -46,10 +46,12 @@ RSpec.describe AnnouncementController, type: :controller do
     end
     context 'given a valid announcement' do
       let(:a) { build(:announcement_email) }
+      role = [Role.create(name: 'test').id]
       it 'creates an announcement' do
         expect do
           post :create, params: { announcement: { email: a.email, sms: a.sms,
-                                                  title: a.title, content: a.content } }
+                                                  title: a.title, content: a.content },
+                                  roles:  role }
         end.to change { Announcement.count }.by(1)
       end
     end
@@ -73,13 +75,49 @@ RSpec.describe AnnouncementController, type: :controller do
         invalid_a # return value which is stored in the variable 'a'.
       end
       it 'redirects and gives an error message to the user' do
+        role = [Role.create(name: 'test').id]
         post :create, params: { announcement: { email: a.email, sms: a.sms,
-                                                title: a.title, content: a.content } }
+                                                title: a.title, content: a.content },
+                                roles: role }
         expect(flash[:alert]).to include(
           'Please select a send type before submitting announcement'
         )
         expect(response.status).to eq(302)
       end
+    end
+    context 'with an no vailed role or user entered' do
+      let(:a) { build(:announcement_sms) }
+      it 'redirects and gives an error message to the user' do
+        post :create, params: { announcement: { email: a.email, sms: a.sms,
+                                                title: a.title, content: a.content } }
+        expect(flash[:alert]).to include(
+          'Did not enter a vaild user or role'
+        )
+        expect(response.status).to eq(302)
+      end
+    end
+    context 'With a valid user entered' do
+      let(:a) { build(:announcement_sms) }
+      context 'with an invalid announcement' do
+        let(:a) do
+          # Build an invalid announcement (i.e. false email and sms)
+          invalid_a = build(:announcement_sms, email: false, sms: false)
+          # Tell active record not to validate the announcement object
+          invalid_a.save(validate: false)
+          invalid_a # return value which is stored in the variable 'a'.
+        end
+        it 'redirects and gives an error message to the user' do
+          athlete = create(:athlete_user)
+          post :create, params: { announcement: { email: a.email, sms: a.sms,
+                                                  title: a.title, content: a.content },
+                                  fname: athlete.first_name, lname: athlete.last_name }
+          expect(flash[:alert]).to include(
+            'Please select a send type before submitting announcement'
+          )
+          expect(response.status).to eq(302)
+        end
+      end
+      
     end
   end
 
@@ -120,7 +158,7 @@ RSpec.describe AnnouncementController, type: :controller do
     context 'an existing announcement' do
       let!(:a) { FactoryGirl.create(:announcement_email) }
 
-      it 'assigns the requested announcement to @announcement' do
+      it 'assigns the requested announcement to @ann' do
         get :show, params: { id: a.id }
         expect(assigns(:announcement)).to eq(a)
       end

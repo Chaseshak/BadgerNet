@@ -15,13 +15,13 @@ class AnnouncementController < ApplicationController
   end
 
   def new
-    @ann = Announcement.new
+    @announcement = Announcement.new
   end
 
   def create
     @fname = params[:fname]
     @lname = params[:lname]
-    @ann = Announcement.new(announcement_params)
+    @announcement = Announcement.new(announcement_params)
     if User.exists?(first_name: @fname, last_name: @lname)
       user_announcement
     elsif params[:roles]
@@ -42,7 +42,7 @@ class AnnouncementController < ApplicationController
   end
 
   def show
-    @ann = Announcement.find(params[:id])
+    @announcement = Announcement.find(params[:id])
   rescue ActiveRecord::RecordNotFound
     flash[:alert] = 'Could not find this announcement'
     render 'index'
@@ -72,40 +72,55 @@ class AnnouncementController < ApplicationController
     flash[:alert] = 'Did not enter a vaild user or role'
   end
 
+  def announcement_fail_no_send_method
+    redirect_to '/announcement'
+    flash[:alert] = 'Please select a send type before submitting announcement'
+  end
+
   def user_announcement
     @to = User.find_by(first_name: @fname, last_name: @lname)
-    if @ann.sms && @ann.email
-      CommentMailer.new_comment(@to, @ann.title, @ann.content, current_user).deliver_now
+    if @announcement.sms || @announcement.email
+      user_announcement_sender
+      announcement_success_personal
+    else
+      announcement_fail_no_send_method
+    end
+  end
+
+  def user_announcement_sender
+    if @announcement.sms && @announcement.email
+      CommentMailer.new_comment(@to, @announcement.title, @announcement.content,
+                                current_user).deliver_now
       send_text_message(@announcement.content)
     elsif @announcement.email
-      CommentMailer.new_comment(@to, @ann.title, @ann.content, current_user).deliver_now
-    elsif @ann.sms
-      send_text_message(@ann.content)
+      CommentMailer.new_comment(@to, @announcement.title, @announcement.content,
+                                current_user).deliver_now
+    elsif @announcement.sms
+      send_text_message(@announcement.content)
     end
-    announcement_success_personal
   end
 
   def role_announcement
-    if @ann.sms && @ann.save
-      send_text_message(@ann.content)
+    if @announcement.sms && @announcement.save
+      send_text_message(@announcement.content)
+      role_announcements
       announcement_success
-    elsif @ann.save
+    elsif @announcement.save
       role_announcements
       announcement_success
     else
-      redirect_to '/announcement'
-      flash[:alert] = 'Please select a send type before submitting announcement'
+      announcement_fail_no_send_method
     end
   end
 
   def role_announcements
+    sent = false
     User.all.each do |u|
-      sent = false
       params[:roles].each do |r|
-        if u.roles.include?(Role.find(r)) && sent == false
-          sent = true
-          CommentMailer.new_comment(u, @ann.title, @ann.content, current_user).deliver_now
-        end
+        next unless u.roles.include?(Role.find(r)) && (sent == false)
+        CommentMailer.new_comment(u, @announcement.title, @announcement.content,
+                                  current_user).deliver_now
+        sent = true
       end
     end
   end
