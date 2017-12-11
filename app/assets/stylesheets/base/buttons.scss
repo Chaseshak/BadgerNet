@@ -36,6 +36,7 @@ a.button-primary {
     color: white;
 }
 
+// colors for red theme
 .button-default {
     background-color: #f1f1f1;
 
@@ -43,6 +44,23 @@ a.button-primary {
     &:active { background-color: #bbbbbb }
 }
 
+.button-primary {
+    background-color: rgb(62, 119, 172);
+
+    &:hover { background-color: rgb(67, 128, 186); }
+    &:active { background-color: rgb(54, 105, 150); }
+}
+
+.button-danger {
+    background-color: rgb(214, 80, 107);
+
+    &:hover { background-color: rgb(218, 82, 111); }
+    &:active { background-color: rgb(196, 73, 100); }
+}
+
+// original (BETTER) colors
+// restore whenever you like
+/*
 .button-primary {
     background-color: #2889ED;
 
@@ -56,15 +74,16 @@ a.button-primary {
     &:hover { background-color: #EB3D5E; }
     &:active { background-color: #E9264B; }
 }
+*/
 
 // emphasized links
 .link-emphasized {
-    font-size: 0.9em;
+    font-size: 0.8em;
     display: inline-block;
     margin: 0.75em 0 0 0;
     padding: 0.35em 0.85em 0.35em 0.85em;
     border-radius: 2em;
-    background: linear-gradient(120deg, $primary-theme-color, $secondary-theme-color);
+    background-color: rgb(62, 119, 172);
     color: white;
     font-weight: $font-weight-bold;
 }
