@@ -1,6 +1,6 @@
 <div class="info-block-wrapper">
     <div class="info-block">
-    <h2><a href="documents">Recent Documents</a></h2>
+    <h2>Recent Documents</h2>
     <table style="margin-top:1em;">
             <tbody>
                 <% @documents.each do |document| %>
@@ -12,5 +12,6 @@
                 <% end %>
             </tbody>
         </table>
+        <button class="link-emphasized" onclick="window.location.href='documents';">View More</button>
     </div>
 </div>

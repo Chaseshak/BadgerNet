@@ -1,6 +1,6 @@
 <div class="info-block-wrapper">
     <div class="info-block">
-    <h2><a href="announcement">Recent Announcements</a></h2>
+    <h2>Recent Announcements</h2>
     <table style="margin-top:1em;">
             <tbody>
                 <% @announcements.each_with_index do |announcement, index| %>
@@ -20,5 +20,7 @@
                 <% end %>
             </tbody>
         </table>
+        <button class="link-emphasized" onclick="window.location.href='announcement';">View More</button>
     </div>
+    
 </div>
